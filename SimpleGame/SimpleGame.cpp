@@ -21,7 +21,7 @@ int main(int argc,char** argv) {
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
     glutInitWindowSize(1280,720);
-    glutCreateWindow("Vessel - 20x20 Ship Prototype");
+    glutCreateWindow("Vessel - 100x100 Three Deck Ship");
     if(glewInit()!=GLEW_OK) { std::cerr<<"OpenGL initialization failed\n"; return 1; }
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS);
     scene=new ShipScene();

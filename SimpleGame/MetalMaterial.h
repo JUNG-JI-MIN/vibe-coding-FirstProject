@@ -99,7 +99,7 @@ void main() {
     color+=lightBRDF(gl_LightSource[4].position.xyz,vec3(4.0,5.0,6.0),N,V,base,F0,rough);
     color+=lightBRDF(gl_LightSource[5].position.xyz,vec3(4.0,5.0,6.0),N,V,base,F0,rough);
     if(emission>0.0) color=base*emission;
-    float fog=smoothstep(5.0,23.0,length(eyePosition))*fogEnabled;
+    float fog=smoothstep(12.0,48.0,length(eyePosition))*fogEnabled;
     color=mix(color,vec3(0.003,0.005,0.009),fog);
     gl_FragColor=vec4(color,1.0);
 }

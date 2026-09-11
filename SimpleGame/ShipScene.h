@@ -6,62 +6,35 @@
 #include "Dependencies/glew.h"
 #include "Dependencies/freeglut.h"
 #include "PostProcessing.h"
+#include "ShipLayout.h"
 #pragma comment(lib, "opengl32.lib")
 
-// One world unit is one metre; outer hull occupies [0,20] on X and Z.
+// Traversable three-deck ship; rendering and movement share ShipLayout geometry.
 class ShipScene {
-    struct Box { float x,y,z,w,h,d,r,g,b; bool solid; float metallic,roughness; };
-    std::vector<Box> boxes;
+    ShipLayout layout;
     PostProcessing postProcessing;
     MetalMaterial metalMaterial;
     bool keys[256] = {};
-    int width=1280, height=720, lastTime=0;
-    float px=10, pz=17.5f, yaw=0, pitch=0;
+    int width=1280, height=720, lastTime=0, mapDeck=1;
+    float px=50, py=0, pz=85, yaw=0, pitch=0;
     bool overview=false, captured=true;
     float health=100.f, stamina=100.f, heartbeatPhase=0.f, staminaAlpha=0.f;
     bool exhausted=false;
     int selectedTool=0;
     struct ToolSlot { const char* name; int count; };
     ToolSlot toolSlots[4]={{"FLASHLIGHT",0},{"ACCESS KEY",0},{"MEDKIT",0},{"UTILITY",0}};
-    static float Clamp(float v,float lo,float hi) { return v<lo?lo:(v>hi?hi:v); }
-    void Add(float x,float y,float z,float w,float h,float d,float r,float g,float b,bool solid=true,
-        float metallic=.75f,float roughness=.42f) {
-        boxes.push_back({x,y,z,w,h,d,r,g,b,solid,metallic,roughness});
-    }
-    void Wall(float x,float z,float w,float d) {
-        Add(x,1.5f,z,w,3,d,.28f,.33f,.37f,true,.85f,.38f);
-        Add(x,.16f,z,w+.015f,.12f,d+.015f,.07f,.1f,.12f,false);
-        Add(x,2.75f,z,w+.02f,.08f,d+.02f,.32f,.38f,.4f,false);
-    }
-    void DoorFrame(float x,float z,bool alongZ) {
-        if(alongZ) {
-            Add(x,1.3f,z-.9f,.4f,2.6f,.16f,.3f,.36f,.38f);
-            Add(x,1.3f,z+.9f,.4f,2.6f,.16f,.3f,.36f,.38f);
-            Add(x,2.7f,z,.4f,.6f,1.95f,.25f,.3f,.33f);
-            Add(x,2.35f,z,.43f,.07f,1.4f,.12f,.8f,.7f,false);
-        } else {
-            Add(x-.9f,1.3f,z,.16f,2.6f,.4f,.3f,.36f,.38f);
-            Add(x+.9f,1.3f,z,.16f,2.6f,.4f,.3f,.36f,.38f);
-            Add(x,2.7f,z,1.95f,.6f,.4f,.25f,.3f,.33f);
-            Add(x,2.35f,z,1.4f,.07f,.43f,.12f,.8f,.7f,false);
+    static float Clamp(float v,float lo,float hi) { return ShipLayout::Clamp(v,lo,hi); }
+    int CurrentDeck() const { return int(Clamp(std::floor((py+4)/4+.5f),0,2)); }
+    void Move(float dx,float dz) {
+        // Short substeps prevent tunnelling through doorway posts while sprinting.
+        int count=int(std::ceil(std::sqrt(dx*dx+dz*dz)/.08f));
+        if(count<1) return;
+        dx/=count; dz/=count;
+        for(int i=0;i<count;++i) {
+            float nextY=py;
+            if(layout.Support(px+dx,pz,py,nextY)&&layout.CanStand(px+dx,nextY,pz)) {px+=dx;py=nextY;}
+            if(layout.Support(px,pz+dz,py,nextY)&&layout.CanStand(px,nextY,pz+dz)) {pz+=dz;py=nextY;}
         }
-    }
-    void Locker(float x,float z) {
-        Add(x,1.05f,z,.85f,2.1f,.65f,.19f,.27f,.28f,true,.4f,.52f);
-        Add(x,1.05f,z+.34f,.73f,1.94f,.04f,.12f,.19f,.2f,false);
-        Add(x+.23f,1.05f,z+.38f,.05f,.27f,.05f,.7f,.75f,.7f,false);
-        for(int i=0;i<4;++i) Add(x,1.65f+i*.08f,z+.38f,.48f,.025f,.02f,.035f,.05f,.055f,false);
-    }
-    bool CanStand(float x,float z) const {
-        const float radius=.22f;
-        if(x<radius+.2f || x>19.8f-radius || z<radius+.2f || z>19.8f-radius) return false;
-        for(const auto& b:boxes) {
-            if(!b.solid || b.y-b.h*.5f>1.8f || b.y+b.h*.5f<.05f) continue;
-            float nx=Clamp(x,b.x-b.w*.5f,b.x+b.w*.5f);
-            float nz=Clamp(z,b.z-b.d*.5f,b.z+b.d*.5f);
-            if((x-nx)*(x-nx)+(z-nz)*(z-nz)<radius*radius) return false;
-        }
-        return true;
     }
     void Text(float x,float y,const char* s) {
         glRasterPos2f(x,y);
@@ -138,56 +111,6 @@ public:
     void SetHealth(float value) { health=Clamp(value,0,100); }
     void SetToolCount(int slot,int count) { if(slot>=0&&slot<4) toolSlots[slot].count=count>0?count:0; }
     ShipScene() {
-        Wall(10,.1f,20,.2f); Wall(10,19.9f,20,.2f);
-        Wall(.1f,10,.2f,20); Wall(19.9f,10,.2f,20);
-        // Central corridor: X=8..12. Side-room entrances at Z=4,10,16.
-        for(float x : {8.f,12.f}) {
-            float start=.2f;
-            for(float door : {4.f,10.f,16.f}) {
-                Wall(x,(start+door-1)*.5f,.2f,door-1-start);
-                DoorFrame(x,door,true); start=door+1;
-            }
-            Wall(x,(start+19.8f)*.5f,.2f,19.8f-start);
-        }
-        for(float z : {7.f,13.f}) { Wall(4,z,7.8f,.2f); Wall(16,z,7.8f,.2f); }
-        // The six rooms are accessible independently through the central corridor.
-        for(float z : {2.f,5.5f,8.f,11.5f,14.f,18.f}) {
-            Add(9,.035f,z,.045f,.02f,1.2f,.08f,.6f,.56f,false);
-            Add(11,.035f,z,.045f,.02f,1.2f,.08f,.6f,.56f,false);
-            Add(10,2.94f,z,1.2f,.06f,.18f,.6f,.85f,.86f,false);
-        }
-        // Cargo, southwest.
-        Add(2,.6f,15,1.4f,1.2f,1.4f,.32f,.27f,.18f,true,.15f,.72f);
-        Add(3.6f,.45f,16.4f,1.1f,.9f,1.1f,.27f,.25f,.19f,true,.15f,.72f);
-        Add(2,1.55f,15,1, .7f,1,.25f,.23f,.18f,true,.15f,.72f);
-        Locker(6,18.9f); Locker(7,18.9f);
-        // Crew room, west middle.
-        for(float z : {8.6f,11.3f}) {
-            Add(2,.32f,z,2.5f,.64f,1.05f,.19f,.24f,.27f);
-            Add(2,.7f,z,2.3f,.16f,.92f,.3f,.36f,.36f,false,0,.9f);
-        }
-        Locker(6,7.7f);
-        // Engineering, northwest.
-        Add(3,1.1f,3.4f,2.2f,2.2f,2.2f,.23f,.27f,.29f);
-        Add(3,1.25f,4.52f,1.5f,.35f,.04f,.7f,.25f,.08f,false);
-        for(float x : {1.f,2.f,3.f,4.f,5.f,6.f}) Add(x,2.65f,3.4f,.15f,.15f,5.8f,.32f,.36f,.37f,false);
-        // Control room, northeast. Console faces toward entrance.
-        Add(17,.55f,3.4f,3.4f,1.1f,1.1f,.13f,.2f,.22f);
-        for(float x : {15.9f,17.f,18.1f}) {
-            Add(x,1.35f,3.2f,.85f,.6f,.12f,.03f,.08f,.09f);
-            Add(x,1.35f,3.28f,.73f,.46f,.025f,.1f,.6f,.55f,false);
-        }
-        // Escape room, east middle: sealed exit is a visual placeholder.
-        Add(19.65f,1.25f,10,.18f,2.5f,1.8f,.22f,.31f,.33f);
-        Add(19.53f,2.6f,10,.06f,.15f,1.7f,.15f,.9f,.48f,false);
-        Add(17,.4f,8.4f,2,.8f,.8f,.23f,.29f,.3f);
-        // Maintenance, southeast.
-        Add(17,.5f,17.8f,3,1,1,.21f,.26f,.28f);
-        Locker(14,18.9f); Locker(15,18.9f);
-        // Key and puzzle-panel stand-ins.
-        Add(17,1.06f,17.8f,.3f,.08f,.12f,.95f,.68f,.15f,false);
-        Add(6.8f,1.1f,1,1,1.5f,.5f,.18f,.23f,.25f);
-        Add(6.8f,1.45f,1.27f,.65f,.38f,.04f,.8f,.32f,.08f,false);
         lastTime=glutGet(GLUT_ELAPSED_TIME);
         glEnable(GL_DEPTH_TEST); glEnable(GL_NORMALIZE);
         glEnable(GL_COLOR_MATERIAL); glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
@@ -202,7 +125,9 @@ public:
         // Temporary UI preview controls until enemy damage and healing are connected.
         if(k=='[') SetHealth(health-10);
         if(k==']') SetHealth(health+10);
-        if(k=='m') overview=!overview;
+        if(k=='m') { overview=!overview; mapDeck=CurrentDeck(); }
+        if(overview&&(k==','||k=='<')) mapDeck=mapDeck>0?mapDeck-1:0;
+        if(overview&&(k=='.'||k=='>')) mapDeck=mapDeck<2?mapDeck+1:2;
         if(k==27) captured=!captured;
         glutSetCursor(captured&&!overview?GLUT_CURSOR_NONE:GLUT_CURSOR_INHERIT);
         if(captured&&!overview) glutWarpPointer(width/2,height/2);
@@ -236,79 +161,98 @@ public:
         float angle=yaw*.0174532925f, step=(running?4.3f:2.4f)*dt/length;
         float dx=(std::sin(angle)*f+std::cos(angle)*s)*step;
         float dz=(-std::cos(angle)*f+std::sin(angle)*s)*step;
-        if(CanStand(px+dx,pz)) px+=dx;
-        if(CanStand(px,pz+dz)) pz+=dz;
+        Move(dx,dz);
+
     }
+
     void Draw() {
         const bool hdr=!overview&&metalMaterial.Initialize()&&postProcessing.Begin(width,height);
         glClearColor(.012f,.02f,.028f,1); glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glUseProgram(0); glMatrixMode(GL_PROJECTION); glLoadIdentity();
         double aspect=double(width)/height;
         if(overview) {
-            double sx=11.5*(aspect>1?aspect:1), sy=11.5*(aspect<1?1/aspect:1);
-            glOrtho(-sx,sx,-sy,sy,.1,60);
+            double sx=56*(aspect>1?aspect:1),sy=56*(aspect<1?1/aspect:1);
+            glOrtho(-sx,sx,-sy,sy,.1,160);
         } else {
-            double top=.07; glFrustum(-top*aspect,top*aspect,-top,top,.1,60);
+            double top=.07; glFrustum(-top*aspect,top*aspect,-top,top,.1,85);
         }
         glMatrixMode(GL_MODELVIEW); glLoadIdentity();
-        if(overview) { glRotatef(90,1,0,0); glTranslatef(-10,-30,-10); }
-        else { glRotatef(pitch,1,0,0); glRotatef(yaw,0,1,0); glTranslatef(-px,-1.65f,-pz); }
+        if(overview) { glRotatef(90,1,0,0); glTranslatef(-50,-80,-50); }
+        else { glRotatef(pitch,1,0,0); glRotatef(yaw,0,1,0); glTranslatef(-px,-py-1.65f,-pz); }
         glEnable(GL_LIGHTING); glEnable(GL_LIGHT0); glEnable(GL_LIGHT1);
         GLfloat ambient[]={.22f,.26f,.3f,1}; glLightModelfv(GL_LIGHT_MODEL_AMBIENT,ambient);
-        GLfloat cool[]={.58f,.72f,.8f,1}, warm[]={.5f,.25f,.12f,1};
-        GLfloat p0[]={10,2.8f,7,1},p1[]={3,2.6f,3,1};
-        glLightfv(GL_LIGHT0,GL_POSITION,p0); glLightfv(GL_LIGHT0,GL_DIFFUSE,cool);
-        glLightfv(GL_LIGHT1,GL_POSITION,p1); glLightfv(GL_LIGHT1,GL_DIFFUSE,warm);
-        glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,.012f);
-        glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,.04f);
-        // Upload room light positions while only the camera transform is active.
-        GLfloat p2[]={10,2.8f,16,1},p3[]={17,2.6f,4,1};
-        GLfloat p4[]={3,2.6f,10,1},p5[]={17,2.6f,16,1};
-        glLightfv(GL_LIGHT2,GL_POSITION,p2); glLightfv(GL_LIGHT3,GL_POSITION,p3);
-        glLightfv(GL_LIGHT4,GL_POSITION,p4); glLightfv(GL_LIGHT5,GL_POSITION,p5);
+        // Select nearby fixtures on the current vertical level instead of moving lamps with the player.
+        std::vector<ShipLayout::Lamp> nearest=layout.lamps;
+        std::sort(nearest.begin(),nearest.end(),[this](const ShipLayout::Lamp& a,const ShipLayout::Lamp& b) {
+            float ay=a.y-(py+3.35f),by=b.y-(py+3.35f);
+            float da=(a.x-px)*(a.x-px)+(a.z-pz)*(a.z-pz)+ay*ay*100;
+            float db=(b.x-px)*(b.x-px)+(b.z-pz)*(b.z-pz)+by*by*100;
+            return da<db;
+        });
+        for(int i=0;i<6&&i<int(nearest.size());++i) {
+            GLfloat p[]={nearest[i].x,nearest[i].y,nearest[i].z,1};
+            GLfloat color[]={.58f,.72f,.8f,1};
+            glLightfv(GL_LIGHT0+i,GL_POSITION,p); glLightfv(GL_LIGHT0+i,GL_DIFFUSE,color);
+            glLightf(GL_LIGHT0+i,GL_QUADRATIC_ATTENUATION,.04f);
+        }
         if(!overview) {
             glEnable(GL_FOG); GLfloat fog[]={.012f,.02f,.028f,1};
-            glFogfv(GL_FOG_COLOR,fog); glFogi(GL_FOG_MODE,GL_LINEAR); glFogf(GL_FOG_START,5); glFogf(GL_FOG_END,23);
+            glFogfv(GL_FOG_COLOR,fog); glFogi(GL_FOG_MODE,GL_LINEAR);
+            glFogf(GL_FOG_START,12); glFogf(GL_FOG_END,48);
         }
-        // Floor plates leave dark seams without extra texture files.
-        if(hdr) metalMaterial.Use(.8f,.58f,0,true);
-        for(int x=0;x<20;++x) for(int z=0;z<20;++z) {
-            glColor3f(.24f,.28f,.31f); glPushMatrix(); glTranslatef(x+.5f,-.05f,z+.5f);
-            glScalef(.985f,.1f,.985f); glutSolidCube(1); glPopMatrix();
-        }
-        for(const auto& b:boxes) {
-            if(overview && b.y>2.4f) continue;
-            bool emissive=b.g>.5f || b.r>.65f;
-            if(hdr) metalMaterial.Use(b.metallic,b.roughness,emissive?5.f:0.f,true);
-            if(emissive) glDisable(GL_LIGHTING);
+        for(const auto& b:layout.boxes) {
+            if(overview) {
+                if(b.deck!=mapDeck) continue;
+                // Omit overhead doorway headers and luminaires in the cutaway plan.
+                if(!b.slab&&b.y-b.h*.5f>ShipLayout::DeckY(mapDeck)+2.7f) continue;
+            } else {
+                float dx=Clamp(px,b.x-b.w*.5f,b.x+b.w*.5f)-px;
+                float dz=Clamp(pz,b.z-b.d*.5f,b.z+b.d*.5f)-pz;
+                if(dx*dx+dz*dz>65*65) continue;
+                if(b.y+b.h*.5f<py-4.2f||b.y-b.h*.5f>py+7) continue;
+            }
+            if(hdr) metalMaterial.Use(b.metallic,b.roughness,b.emission,true);
+            if(b.emission>0) glDisable(GL_LIGHTING);
             glColor3f(b.r,b.g,b.b); glPushMatrix(); glTranslatef(b.x,b.y,b.z);
             glScalef(b.w,b.h,b.d); glutSolidCube(1); glPopMatrix();
-            if(emissive) glEnable(GL_LIGHTING);
+            if(b.emission>0) glEnable(GL_LIGHTING);
         }
-        if(!overview) {
-            if(hdr) metalMaterial.Use(.65f,.65f,0,true);
-            glColor3f(.075f,.095f,.115f); glPushMatrix(); glTranslatef(10,3.05f,10);
-            glScalef(20,.1f,20); glutSolidCube(1); glPopMatrix();
-        } else {
-            glDisable(GL_LIGHTING); glColor3f(1,.7f,.15f); glPushMatrix();
-            glTranslatef(px,3,pz); glutSolidSphere(.22,12,8); glPopMatrix();
-        }
-        // Keep the layout overview unfiltered. HUD and crosshair remain unaffected.
         glUseProgram(0);
+        if(overview) {
+            glDisable(GL_LIGHTING);
+            if(mapDeck==CurrentDeck()) {
+                glColor3f(1,.7f,.15f); glPushMatrix(); glTranslatef(px,12,pz);
+                glutSolidSphere(.8,12,8); glPopMatrix();
+                float a=yaw*.0174532925f;
+                glBegin(GL_LINES); glVertex3f(px,12,pz);
+                glVertex3f(px+std::sin(a)*3,12,pz-std::cos(a)*3); glEnd();
+            }
+            glColor3f(.5f,.85f,1);
+            for(const auto& room:layout.rooms) if(room.deck==mapDeck) {
+                glRasterPos3f(room.x-7,12,room.z);
+                for(const char* p=room.name;*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+            }
+            glRasterPos3f(20,12,42);
+            for(const char* p="STAIR W";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+            glRasterPos3f(72,12,60);
+            for(const char* p="STAIR E";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+        }
         if(hdr) postProcessing.Apply();
         glDisable(GL_FOG); glDisable(GL_LIGHTING); glDisable(GL_DEPTH_TEST);
         glMatrixMode(GL_PROJECTION); glLoadIdentity(); glOrtho(0,width,height,0,-1,1);
         glMatrixMode(GL_MODELVIEW); glLoadIdentity();
-        glColor3f(.7f,.86f,.87f); Text(22,28,"VESSEL / DECK 01     20 x 20 m");
+        glColor3f(.7f,.86f,.87f);
+        char title[128]; sprintf_s(title,"VESSEL / %s / 100 x 100 m",ShipLayout::DeckName(overview?mapDeck:CurrentDeck()));
+        Text(22,28,title);
         Text(22,50,"WASD Move | SHIFT Run | M Map | ESC Cursor | [ ] Preview HP");
         if(overview) {
-            Text(22,80,"NORTH: Engineering / Control"); Text(22,100,"MIDDLE: Crew / Escape");
-            Text(22,120,"SOUTH: Cargo / Maintenance | Yellow dot: player");
+            Text(22,80,"< / > Select deck | Two stair cores connect B1 / 1F / 2F");
+            Text(22,100,"6 m loop corridors + cross routes | Yellow marker: player");
         } else {
             glBegin(GL_LINES); glVertex2i(width/2-5,height/2); glVertex2i(width/2+5,height/2);
             glVertex2i(width/2,height/2-5); glVertex2i(width/2,height/2+5); glEnd();
+            DrawHud();
         }
-        DrawHud();
         glEnable(GL_DEPTH_TEST); glutSwapBuffers();
     }
 };
