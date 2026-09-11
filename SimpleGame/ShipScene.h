@@ -5,12 +5,14 @@
 #include <cstdio>
 #include "Dependencies/glew.h"
 #include "Dependencies/freeglut.h"
+#include "PostProcessing.h"
 #pragma comment(lib, "opengl32.lib")
 
 // One world unit is one metre; outer hull occupies [0,20] on X and Z.
 class ShipScene {
     struct Box { float x,y,z,w,h,d,r,g,b; bool solid; };
     std::vector<Box> boxes;
+    PostProcessing postProcessing;
     bool keys[256] = {};
     int width=1280, height=720, lastTime=0;
     float px=10, pz=17.5f, yaw=0, pitch=0;
@@ -130,6 +132,7 @@ class ShipScene {
         glDisable(GL_BLEND); glColor4f(1,1,1,1);
     }
 public:
+    void ReleaseGraphics() { postProcessing.Release(); }
     void SetHealth(float value) { health=Clamp(value,0,100); }
     void SetToolCount(int slot,int count) { if(slot>=0&&slot<4) toolSlots[slot].count=count>0?count:0; }
     ShipScene() {
@@ -279,6 +282,8 @@ public:
             glDisable(GL_LIGHTING); glColor3f(1,.7f,.15f); glPushMatrix();
             glTranslatef(px,3,pz); glutSolidSphere(.22,12,8); glPopMatrix();
         }
+        // Keep the layout overview unfiltered. HUD and crosshair remain unaffected.
+        if(!overview) postProcessing.Apply(width,height);
         glDisable(GL_FOG); glDisable(GL_LIGHTING); glDisable(GL_DEPTH_TEST);
         glMatrixMode(GL_PROJECTION); glLoadIdentity(); glOrtho(0,width,height,0,-1,1);
         glMatrixMode(GL_MODELVIEW); glLoadIdentity();
