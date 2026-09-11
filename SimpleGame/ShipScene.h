@@ -10,9 +10,10 @@
 
 // One world unit is one metre; outer hull occupies [0,20] on X and Z.
 class ShipScene {
-    struct Box { float x,y,z,w,h,d,r,g,b; bool solid; };
+    struct Box { float x,y,z,w,h,d,r,g,b; bool solid; float metallic,roughness; };
     std::vector<Box> boxes;
     PostProcessing postProcessing;
+    MetalMaterial metalMaterial;
     bool keys[256] = {};
     int width=1280, height=720, lastTime=0;
     float px=10, pz=17.5f, yaw=0, pitch=0;
@@ -23,11 +24,12 @@ class ShipScene {
     struct ToolSlot { const char* name; int count; };
     ToolSlot toolSlots[4]={{"FLASHLIGHT",0},{"ACCESS KEY",0},{"MEDKIT",0},{"UTILITY",0}};
     static float Clamp(float v,float lo,float hi) { return v<lo?lo:(v>hi?hi:v); }
-    void Add(float x,float y,float z,float w,float h,float d,float r,float g,float b,bool solid=true) {
-        boxes.push_back({x,y,z,w,h,d,r,g,b,solid});
+    void Add(float x,float y,float z,float w,float h,float d,float r,float g,float b,bool solid=true,
+        float metallic=.75f,float roughness=.42f) {
+        boxes.push_back({x,y,z,w,h,d,r,g,b,solid,metallic,roughness});
     }
     void Wall(float x,float z,float w,float d) {
-        Add(x,1.5f,z,w,3,d,.16f,.21f,.24f);
+        Add(x,1.5f,z,w,3,d,.28f,.33f,.37f,true,.85f,.38f);
         Add(x,.16f,z,w+.015f,.12f,d+.015f,.07f,.1f,.12f,false);
         Add(x,2.75f,z,w+.02f,.08f,d+.02f,.32f,.38f,.4f,false);
     }
@@ -45,7 +47,7 @@ class ShipScene {
         }
     }
     void Locker(float x,float z) {
-        Add(x,1.05f,z,.85f,2.1f,.65f,.19f,.27f,.28f);
+        Add(x,1.05f,z,.85f,2.1f,.65f,.19f,.27f,.28f,true,.4f,.52f);
         Add(x,1.05f,z+.34f,.73f,1.94f,.04f,.12f,.19f,.2f,false);
         Add(x+.23f,1.05f,z+.38f,.05f,.27f,.05f,.7f,.75f,.7f,false);
         for(int i=0;i<4;++i) Add(x,1.65f+i*.08f,z+.38f,.48f,.025f,.02f,.035f,.05f,.055f,false);
@@ -132,7 +134,7 @@ class ShipScene {
         glDisable(GL_BLEND); glColor4f(1,1,1,1);
     }
 public:
-    void ReleaseGraphics() { postProcessing.Release(); }
+    void ReleaseGraphics() { metalMaterial.Release(); postProcessing.Release(); }
     void SetHealth(float value) { health=Clamp(value,0,100); }
     void SetToolCount(int slot,int count) { if(slot>=0&&slot<4) toolSlots[slot].count=count>0?count:0; }
     ShipScene() {
@@ -155,14 +157,14 @@ public:
             Add(10,2.94f,z,1.2f,.06f,.18f,.6f,.85f,.86f,false);
         }
         // Cargo, southwest.
-        Add(2,.6f,15,1.4f,1.2f,1.4f,.32f,.27f,.18f);
-        Add(3.6f,.45f,16.4f,1.1f,.9f,1.1f,.27f,.25f,.19f);
-        Add(2,1.55f,15,1, .7f,1,.25f,.23f,.18f);
+        Add(2,.6f,15,1.4f,1.2f,1.4f,.32f,.27f,.18f,true,.15f,.72f);
+        Add(3.6f,.45f,16.4f,1.1f,.9f,1.1f,.27f,.25f,.19f,true,.15f,.72f);
+        Add(2,1.55f,15,1, .7f,1,.25f,.23f,.18f,true,.15f,.72f);
         Locker(6,18.9f); Locker(7,18.9f);
         // Crew room, west middle.
         for(float z : {8.6f,11.3f}) {
             Add(2,.32f,z,2.5f,.64f,1.05f,.19f,.24f,.27f);
-            Add(2,.7f,z,2.3f,.16f,.92f,.3f,.36f,.36f,false);
+            Add(2,.7f,z,2.3f,.16f,.92f,.3f,.36f,.36f,false,0,.9f);
         }
         Locker(6,7.7f);
         // Engineering, northwest.
@@ -238,6 +240,7 @@ public:
         if(CanStand(px,pz+dz)) pz+=dz;
     }
     void Draw() {
+        const bool hdr=!overview&&metalMaterial.Initialize()&&postProcessing.Begin(width,height);
         glClearColor(.012f,.02f,.028f,1); glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glUseProgram(0); glMatrixMode(GL_PROJECTION); glLoadIdentity();
         double aspect=double(width)/height;
@@ -258,24 +261,32 @@ public:
         glLightfv(GL_LIGHT1,GL_POSITION,p1); glLightfv(GL_LIGHT1,GL_DIFFUSE,warm);
         glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,.012f);
         glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,.04f);
+        // Upload room light positions while only the camera transform is active.
+        GLfloat p2[]={10,2.8f,16,1},p3[]={17,2.6f,4,1};
+        GLfloat p4[]={3,2.6f,10,1},p5[]={17,2.6f,16,1};
+        glLightfv(GL_LIGHT2,GL_POSITION,p2); glLightfv(GL_LIGHT3,GL_POSITION,p3);
+        glLightfv(GL_LIGHT4,GL_POSITION,p4); glLightfv(GL_LIGHT5,GL_POSITION,p5);
         if(!overview) {
             glEnable(GL_FOG); GLfloat fog[]={.012f,.02f,.028f,1};
             glFogfv(GL_FOG_COLOR,fog); glFogi(GL_FOG_MODE,GL_LINEAR); glFogf(GL_FOG_START,5); glFogf(GL_FOG_END,23);
         }
         // Floor plates leave dark seams without extra texture files.
+        if(hdr) metalMaterial.Use(.8f,.58f,0,true);
         for(int x=0;x<20;++x) for(int z=0;z<20;++z) {
-            glColor3f(.115f,.145f,.16f); glPushMatrix(); glTranslatef(x+.5f,-.05f,z+.5f);
+            glColor3f(.24f,.28f,.31f); glPushMatrix(); glTranslatef(x+.5f,-.05f,z+.5f);
             glScalef(.985f,.1f,.985f); glutSolidCube(1); glPopMatrix();
         }
         for(const auto& b:boxes) {
             if(overview && b.y>2.4f) continue;
             bool emissive=b.g>.5f || b.r>.65f;
+            if(hdr) metalMaterial.Use(b.metallic,b.roughness,emissive?5.f:0.f,true);
             if(emissive) glDisable(GL_LIGHTING);
             glColor3f(b.r,b.g,b.b); glPushMatrix(); glTranslatef(b.x,b.y,b.z);
             glScalef(b.w,b.h,b.d); glutSolidCube(1); glPopMatrix();
             if(emissive) glEnable(GL_LIGHTING);
         }
         if(!overview) {
+            if(hdr) metalMaterial.Use(.65f,.65f,0,true);
             glColor3f(.075f,.095f,.115f); glPushMatrix(); glTranslatef(10,3.05f,10);
             glScalef(20,.1f,20); glutSolidCube(1); glPopMatrix();
         } else {
@@ -283,7 +294,8 @@ public:
             glTranslatef(px,3,pz); glutSolidSphere(.22,12,8); glPopMatrix();
         }
         // Keep the layout overview unfiltered. HUD and crosshair remain unaffected.
-        if(!overview) postProcessing.Apply(width,height);
+        glUseProgram(0);
+        if(hdr) postProcessing.Apply();
         glDisable(GL_FOG); glDisable(GL_LIGHTING); glDisable(GL_DEPTH_TEST);
         glMatrixMode(GL_PROJECTION); glLoadIdentity(); glOrtho(0,width,height,0,-1,1);
         glMatrixMode(GL_MODELVIEW); glLoadIdentity();
