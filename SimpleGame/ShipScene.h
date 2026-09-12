@@ -7,13 +7,13 @@
 #include "Dependencies/freeglut.h"
 #include "PostProcessing.h"
 #include "ShipLayout.h"
-#include "PipePuzzle.h"
+#include "ColorQuest.h"
 #pragma comment(lib, "opengl32.lib")
 
 // Traversable three-deck ship; rendering and movement share ShipLayout geometry.
 class ShipScene {
     ShipLayout layout;
-    PipePuzzle pipePuzzle;
+    ColorQuest pipePuzzle;
     PostProcessing postProcessing;
     MetalMaterial metalMaterial;
     bool keys[256] = {};
@@ -106,6 +106,11 @@ class ShipScene {
             else sprintf_s(label,"EMPTY");
             Text(1105,ty+42,label);
         }
+        for(int i=0;i<4;++i) {
+            glColor4f(.72f,.8f,.85f,1); char coreLabel[64];
+            sprintf_s(coreLabel,"%s: %s",ColorQuest::Name(i),pipePuzzle.ItemState(i));
+            Text(22,112+i*20.f,coreLabel);
+        }
         glDisable(GL_BLEND); glColor4f(1,1,1,1);
     }
 public:
@@ -158,6 +163,7 @@ public:
             }
             return true;
         });
+        toolSlots[1].count=pipePuzzle.HasCard()?1:0;
         // Poll Shift because freeglut's modifier mask is only valid inside input callbacks.
         bool shift=(GetAsyncKeyState(VK_SHIFT)&0x8000)!=0;
         bool moving=active&&(keys['w']!=keys['s']||keys['a']!=keys['d']);
@@ -251,8 +257,12 @@ public:
             glRasterPos3f(72,12,60);
             for(const char* p="STAIR E";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
             if(mapDeck==0) {
-                glRasterPos3f(32,12,50);
-                for(const char* p="PIPE / VALVE";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+                for(int i=0;i<4;++i) {
+                    float x,z;ColorQuest::World(i,35,48,x,z);glRasterPos3f(x-3,12,z);
+                    for(const char* p=ColorQuest::Name(i);*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+                }
+                glRasterPos3f(48,12,50);
+                for(const char* p="CORE HUB";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
             }
         }
         if(hdr) postProcessing.Apply();
@@ -277,3 +287,4 @@ public:
         glEnable(GL_DEPTH_TEST); glutSwapBuffers();
     }
 };
+

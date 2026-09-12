@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include "ColorQuest.h"
 
 // Ship interior: 100 x 100 metres, deck surfaces at -4, 0 and +4 metres.
 class ShipLayout {
@@ -200,6 +201,25 @@ public:
             }
         }
         Core(20,37,false); Core(72,53,true);
+        buildingDeck=0; base=DeckY(0);
+        // Dedicated reward alcoves prevent collecting cores via the rooms' alternate doors.
+        for(int i=0;i<4;++i) {
+            auto Partition=[&](float x,float z,float w,float d) {
+                float wx,wz;ColorQuest::World(i,x,z,wx,wz);
+                Wall(wx,wz,i%2?d:w,i%2?w:d);
+            };
+            Partition(37.5f,44.5f,.3f,5);
+            Partition(40.5f,44.5f,.3f,5);
+            Partition(39,42,3,.3f);
+            float x,z;ColorQuest::World(i,39,43.5f,x,z);
+            Add(x,.55f,z,.7f,1.1f,.7f,.3f,.35f,.38f);
+        }
+        // Four-door central insertion room; through routes stay open on both axes.
+        Bulkhead(true,47.7f,47.7f,52.3f,{50});
+        Bulkhead(true,52.3f,47.7f,52.3f,{50});
+        Bulkhead(false,47.7f,47.7f,52.3f,{50});
+        Bulkhead(false,52.3f,47.7f,52.3f,{50});
+        Add(50,.6f,50,1.3f,1.2f,.85f,.22f,.3f,.32f);
         // Carry forward the key and final escape placeholders without blocking loop routes.
         buildingDeck=1; base=DeckY(1);
         Add(17,.89f,57,.3f,.08f,.12f,.9f,.65f,.14f,false,.8f,.3f);

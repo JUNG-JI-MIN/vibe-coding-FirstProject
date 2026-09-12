@@ -42,6 +42,7 @@ class PipePuzzle {
         glutSolidCylinder(radius,length,12,1);glPopMatrix();
     }
 public:
+    bool IsOpen() const { return state==Open; }
     // Door remains collidable until all fragments have disappeared.
     bool Blocks(float x,float y,float z) const {
         if(y>-.3f||y+1.8f<-4) return false;
@@ -101,9 +102,10 @@ public:
         return "";
     }
     float RepairProgress() const {return repair;}
-    void Draw(bool hdr,MetalMaterial& material,float px,float py,float pz) {
+    void Draw(bool hdr,MetalMaterial& material,float px,float py,float pz,bool particlesPass=false) {
         // Basement piping installation in the west part of the central corridor.
         if(py>1||std::fabs(px-35)>60||std::fabs(pz-48)>60) return;
+        if(!particlesPass) {
         if(hdr) material.Use(.8f,.32f,0,true);
         glColor3f(.55f,.62f,.56f);
         for(int i=0;i<3;++i) {
@@ -142,6 +144,8 @@ public:
                 glColor3f(.34f,.22f,.23f);
                 Cube(37.9f+i*.2f,-3.9125f+j*.175f,47,.20f,.175f,.22f);
             }
+        }
+        glUseProgram(0); return;
         }
         glUseProgram(0);glDisable(GL_LIGHTING);
         glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);glDepthMask(GL_FALSE);
