@@ -7,11 +7,13 @@
 #include "Dependencies/freeglut.h"
 #include "PostProcessing.h"
 #include "ShipLayout.h"
+#include "PipePuzzle.h"
 #pragma comment(lib, "opengl32.lib")
 
 // Traversable three-deck ship; rendering and movement share ShipLayout geometry.
 class ShipScene {
     ShipLayout layout;
+    PipePuzzle pipePuzzle;
     PostProcessing postProcessing;
     MetalMaterial metalMaterial;
     bool keys[256] = {};
@@ -32,8 +34,8 @@ class ShipScene {
         dx/=count; dz/=count;
         for(int i=0;i<count;++i) {
             float nextY=py;
-            if(layout.Support(px+dx,pz,py,nextY)&&layout.CanStand(px+dx,nextY,pz)) {px+=dx;py=nextY;}
-            if(layout.Support(px,pz+dz,py,nextY)&&layout.CanStand(px,nextY,pz+dz)) {pz+=dz;py=nextY;}
+            if(layout.Support(px+dx,pz,py,nextY)&&layout.CanStand(px+dx,nextY,pz)&&!pipePuzzle.Blocks(px+dx,nextY,pz)) {px+=dx;py=nextY;}
+            if(layout.Support(px,pz+dz,py,nextY)&&layout.CanStand(px,nextY,pz+dz)&&!pipePuzzle.Blocks(px,nextY,pz+dz)) {pz+=dz;py=nextY;}
         }
     }
     void Text(float x,float y,const char* s) {
@@ -145,6 +147,17 @@ public:
         heartbeatPhase+=dt*(1.0f+2.0f*(1-health/100.f));
         heartbeatPhase=std::fmod(heartbeatPhase,1000.f);
         bool active=!overview&&captured&&GetForegroundWindow()==GetActiveWindow();
+        pipePuzzle.Update(dt,px,py,pz,yaw,pitch,keys['e']&&active,active,[this](float x,float y,float z) {
+            // Prevent interactions through bulkheads, slabs or furniture.
+            for(int i=1;i<24;++i) {
+                float t=i/24.f,rx=px+(x-px)*t,ry=py+1.65f+(y-py-1.65f)*t,rz=pz+(z-pz)*t;
+                for(const auto& b:layout.boxes) {
+                    if(!b.solid&&!b.slab) continue;
+                    if(std::fabs(rx-b.x)<b.w*.5f&&std::fabs(ry-b.y)<b.h*.5f&&std::fabs(rz-b.z)<b.d*.5f) return false;
+                }
+            }
+            return true;
+        });
         // Poll Shift because freeglut's modifier mask is only valid inside input callbacks.
         bool shift=(GetAsyncKeyState(VK_SHIFT)&0x8000)!=0;
         bool moving=active&&(keys['w']!=keys['s']||keys['a']!=keys['d']);
@@ -218,6 +231,7 @@ public:
             if(b.emission>0) glEnable(GL_LIGHTING);
         }
         glUseProgram(0);
+        if(!overview) pipePuzzle.Draw(hdr,metalMaterial,px,py,pz);
         if(overview) {
             glDisable(GL_LIGHTING);
             if(mapDeck==CurrentDeck()) {
@@ -236,6 +250,10 @@ public:
             for(const char* p="STAIR W";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
             glRasterPos3f(72,12,60);
             for(const char* p="STAIR E";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+            if(mapDeck==0) {
+                glRasterPos3f(32,12,50);
+                for(const char* p="PIPE / VALVE";*p;++p) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,*p);
+            }
         }
         if(hdr) postProcessing.Apply();
         glDisable(GL_FOG); glDisable(GL_LIGHTING); glDisable(GL_DEPTH_TEST);
@@ -252,6 +270,9 @@ public:
             glBegin(GL_LINES); glVertex2i(width/2-5,height/2); glVertex2i(width/2+5,height/2);
             glVertex2i(width/2,height/2-5); glVertex2i(width/2,height/2+5); glEnd();
             DrawHud();
+            glColor3f(.95f,.72f,.65f);Text(420,598,pipePuzzle.Prompt());
+            if(pipePuzzle.Prompt()[0]&&pipePuzzle.RepairProgress()>0&&pipePuzzle.RepairProgress()<1)
+                Panel(490,612,300*pipePuzzle.RepairProgress(),4,.85f,.25f,.2f,1);
         }
         glEnable(GL_DEPTH_TEST); glutSwapBuffers();
     }
