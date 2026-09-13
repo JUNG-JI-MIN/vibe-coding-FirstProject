@@ -113,6 +113,73 @@ class ShipScene {
         }
         glDisable(GL_BLEND); glColor4f(1,1,1,1);
     }
+    void DrawBlueprint() {
+        glUseProgram(0);glDisable(GL_LIGHTING);glDisable(GL_FOG);glDisable(GL_DEPTH_TEST);
+        glClearColor(.018f,.025f,.03f,1);glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        glMatrixMode(GL_PROJECTION);glLoadIdentity();glOrtho(0,width,height,0,-1,1);
+        glMatrixMode(GL_MODELVIEW);glLoadIdentity();
+        glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+        float size=Clamp(float(height)-160,100,10000);
+        if(size>width-100)size=Clamp(float(width)-100,100,10000);
+        float scale=size/100,ox=(width-size)*.5f,oy=(height-size)*.5f+12;
+        auto X=[&](float x){return ox+x*scale;};
+        auto Z=[&](float z){return oy+z*scale;};
+        auto Ring=[&](float x,float y,float r) {
+            glBegin(GL_LINE_LOOP);for(int i=0;i<64;++i){float a=i*6.2831853f/64;glVertex2f(x+std::cos(a)*r,y+std::sin(a)*r);}glEnd();
+        };
+        // Blueprint grid extends beyond the ship footprint.
+        glColor4f(.24f,.29f,.31f,.22f);glBegin(GL_LINES);
+        float grid=Clamp(scale*2,8,30);
+        for(float x=0;x<width;x+=grid){glVertex2f(x,68);glVertex2f(x,float(height-50));}
+        for(float y=68;y<height-50;y+=grid){glVertex2f(0,y);glVertex2f(float(width),y);}glEnd();
+        Panel(X(6),Z(6),88*scale,88*scale,.05f,.16f,.18f,.35f);
+        // Architectural walls only: furniture and overhead fixtures do not obscure routes.
+        for(int pass=0;pass<2;++pass) {
+            glLineWidth(pass==0?4.f:1.f);
+            glColor4f(.28f,.65f,.68f,pass==0?.10f:.7f);
+            for(const auto& b:layout.boxes) {
+                if(b.deck!=mapDeck||!b.solid||b.h<3||b.y-b.h*.5f>ShipLayout::DeckY(mapDeck)+.1f)continue;
+                float x=X(b.x-b.w*.5f),z=Z(b.z-b.d*.5f),w=b.w*scale,d=b.d*scale;
+                glBegin(GL_LINE_LOOP);glVertex2f(x,z);glVertex2f(x+w,z);glVertex2f(x+w,z+d);glVertex2f(x,z+d);glEnd();
+            }
+        }
+        glLineWidth(1);
+        for(int i=0;i<2;++i) {
+            float x=X(i?76:24),y=Z(i?58:42);
+            Panel(x-9,y-9,18,18,.025f,.05f,.055f,.95f);
+            glColor4f(.7f,.8f,.79f,1);glBegin(GL_LINE_STRIP);
+            for(int j=0;j<4;++j){glVertex2f(x-7+j*4,y+6-j*4);glVertex2f(x-3+j*4,y+6-j*4);}glEnd();
+        }
+        if(mapDeck==0) {
+            for(int i=0;i<4;++i) {
+                float wx,wz;ColorQuest::World(i,39,43.5f,wx,wz);float x=X(wx),y=Z(wz);
+                bool missing=pipePuzzle.ItemState(i)[0]=='M';
+                glColor4f(missing?.65f:.22f,missing?.4f:.6f,.15f,1);
+                glBegin(GL_LINE_LOOP);glVertex2f(x,y-9);glVertex2f(x+7,y);glVertex2f(x,y+9);glVertex2f(x-7,y);glEnd();
+                Text(x-4,y+4,missing?"!":"+");
+            }
+            glColor4f(.7f,.75f,.75f,1);Ring(X(50),Z(50),8);Text(X(50)+12,Z(50)+4,"HUB");
+        }
+        if(mapDeck==CurrentDeck()) {
+            float x=X(px),y=Z(pz),pulse=1+std::sin(glutGet(GLUT_ELAPSED_TIME)*.002f)*.05f;
+            glColor4f(.75f,.82f,.79f,.45f);Ring(x,y,26*pulse);Ring(x,y,31*pulse);
+            glColor4f(.3f,.95f,.42f,1);glLineWidth(2);Ring(x,y,5);glLineWidth(1);
+            float a=yaw*.0174532925f;
+            glBegin(GL_LINES);glVertex2f(x,y);glVertex2f(x+std::sin(a)*17,y-std::cos(a)*17);glEnd();
+        }
+        Panel(0,0,float(width),68,.02f,.025f,.03f,.98f);
+        glColor4f(.73f,.79f,.8f,1);Text(24,27,"VESSEL / DECK SCHEMATIC");
+        for(int i=0;i<3;++i) {
+            float x=width*.5f-108+i*76;
+            Panel(x,13,68,32,i==mapDeck?.22f:.065f,i==mapDeck?.29f:.075f,i==mapDeck?.3f:.08f,1);
+            glColor4f(.78f,.83f,.83f,1);Text(x+24,34,i==0?"B1":(i==1?"1F":"2F"));
+        }
+        glColor4f(.48f,.65f,.65f,1);Text(24,54,ShipLayout::DeckName(mapDeck));
+        Text(width-48,90,"N");
+        Panel(0,float(height-50),float(width),50,.02f,.025f,.03f,.98f);
+        glColor4f(.62f,.72f,.72f,1);Text(24,float(height-29),"M CLOSE  |  , / . CHANGE DECK  |  GREEN: YOU  |  DIAMOND: CORE  |  STEPS: STAIRS");
+        glDisable(GL_BLEND);glEnable(GL_DEPTH_TEST);glutSwapBuffers();
+    }
 public:
     void Button(int button,int state) {if(button==GLUT_LEFT_BUTTON)tools.Button(state==GLUT_DOWN,!overview&&captured);}
     void ReleaseGraphics() { metalMaterial.Release(); postProcessing.Release(); }
@@ -197,6 +264,7 @@ public:
     }
 
     void Draw() {
+        if(overview){DrawBlueprint();return;}
         const bool hdr=!overview&&metalMaterial.Initialize()&&postProcessing.Begin(width,height);
         glClearColor(.012f,.02f,.028f,1); glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glUseProgram(0); glMatrixMode(GL_PROJECTION); glLoadIdentity();
