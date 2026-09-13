@@ -51,9 +51,12 @@ void main() {
         bloom+=bright(uv+offset*texel*2.5)*weight/81.0;
     }
     color=toneMap((color+bloom*bloomStrength)*exposure);
+    // Apply the mask after display conversion so gamma does not wash out the edges.
+    vec3 displayColor=pow(max(color,vec3(0.0)),vec3(1.0/2.2));
     vec2 p=(uv-0.5)*2.0;
-    color*=1.0-strength*smoothstep(0.35,1.25,length(p));
-    gl_FragColor=vec4(pow(max(color,vec3(0.0)),vec3(1.0/2.2)),1.0);
+    float edge=smoothstep(0.30,1.40,length(p));
+    float vignette=1.0-clamp(strength,0.0,0.95)*edge;
+    gl_FragColor=vec4(displayColor*vignette,1.0);
 }
 )GLSL";
         program=ShipProgram(vs,fs);
@@ -63,7 +66,7 @@ void main() {
     }
 public:
     float exposure=.85f;
-    float vignetteStrength=.55f;
+    float vignetteStrength=.82f;
     float bloomStrength=.12f;
     bool Begin(int width,int height) {
         active=false;
