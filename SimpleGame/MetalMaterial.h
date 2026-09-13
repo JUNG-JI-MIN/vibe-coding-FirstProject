@@ -37,6 +37,7 @@ class MetalMaterial {
     GLuint program=0;
     bool attempted=false;
 public:
+    bool flashlight=false;
     bool Initialize() {
         if(attempted) return program!=0;
         attempted=true;
@@ -62,6 +63,7 @@ uniform float metallic;
 uniform float roughness;
 uniform float emission;
 uniform float fogEnabled;
+uniform float flashlightOn;
 const float PI=3.14159265;
 vec3 lightBRDF(vec3 position,vec3 radiance,vec3 N,vec3 V,vec3 base,vec3 F0,float rough) {
     vec3 delta=position-eyePosition;
@@ -98,6 +100,8 @@ void main() {
     color+=lightBRDF(gl_LightSource[3].position.xyz,vec3(4.0,6.0,7.0),N,V,base,F0,rough);
     color+=lightBRDF(gl_LightSource[4].position.xyz,vec3(4.0,5.0,6.0),N,V,base,F0,rough);
     color+=lightBRDF(gl_LightSource[5].position.xyz,vec3(4.0,5.0,6.0),N,V,base,F0,rough);
+    float cone=smoothstep(0.86,0.96,dot(normalize(eyePosition),vec3(0.0,0.0,-1.0)));
+    color+=lightBRDF(vec3(0.0),vec3(18.0,19.0,20.0)*cone*flashlightOn,N,V,base,F0,rough);
     if(emission>0.0) color=base*emission;
     float fog=smoothstep(12.0,48.0,length(eyePosition))*fogEnabled;
     color=mix(color,vec3(0.003,0.005,0.009),fog);
@@ -113,6 +117,7 @@ void main() {
         glUniform1f(glGetUniformLocation(program,"roughness"),rough);
         glUniform1f(glGetUniformLocation(program,"emission"),glow);
         glUniform1f(glGetUniformLocation(program,"fogEnabled"),fog?1.f:0.f);
+        glUniform1f(glGetUniformLocation(program,"flashlightOn"),flashlight?1.f:0.f);
     }
     void Release() { if(program) glDeleteProgram(program); program=0; attempted=false; }
 };

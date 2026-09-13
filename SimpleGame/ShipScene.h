@@ -8,12 +8,14 @@
 #include "PostProcessing.h"
 #include "ShipLayout.h"
 #include "ColorQuest.h"
+#include "ToolWheel.h"
 #pragma comment(lib, "opengl32.lib")
 
 // Traversable three-deck ship; rendering and movement share ShipLayout geometry.
 class ShipScene {
     ShipLayout layout;
     ColorQuest pipePuzzle;
+    ToolWheel tools;
     PostProcessing postProcessing;
     MetalMaterial metalMaterial;
     bool keys[256] = {};
@@ -22,9 +24,6 @@ class ShipScene {
     bool overview=false, captured=true;
     float health=100.f, stamina=100.f, heartbeatPhase=0.f, staminaAlpha=0.f;
     bool exhausted=false;
-    int selectedTool=0;
-    struct ToolSlot { const char* name; int count; };
-    ToolSlot toolSlots[4]={{"FLASHLIGHT",0},{"ACCESS KEY",0},{"MEDKIT",0},{"UTILITY",0}};
     static float Clamp(float v,float lo,float hi) { return ShipLayout::Clamp(v,lo,hi); }
     int CurrentDeck() const { return int(Clamp(std::floor((py+4)/4+.5f),0,2)); }
     void Move(float dx,float dz) {
@@ -92,19 +91,20 @@ class ShipScene {
             Panel(sx,sy,300,5,1,1,1,staminaAlpha*.16f);
             Panel(sx,sy,300*stamina/100.f,5,1,1,1,staminaAlpha*.95f);
         }
-        Panel(1072,216,180,302,.015f,.035f,.045f,.78f);
-        glColor4f(.65f,.76f,.8f,1); Text(1086,240,"TOOLS / 1-4");
-        for(int i=0;i<4;++i) {
-            float ty=252+i*64.f;
-            bool selected=i==selectedTool;
-            Panel(1080,ty,164,58,.2f,.4f,.47f,selected?.26f:.07f);
-            if(selected) Panel(1080,ty,2,58,.4f,.8f,1,.9f);
-            glColor4f(.65f,.8f,.86f,1); sprintf_s(label,"%d",i+1); Text(1088,ty+20,label);
-            Text(1105,ty+20,toolSlots[i].name);
-            glColor4f(.48f,.58f,.63f,1);
-            if(toolSlots[i].count>0) sprintf_s(label,"OWNED x%d",toolSlots[i].count);
-            else sprintf_s(label,"EMPTY");
-            Text(1105,ty+42,label);
+        Panel(1052,230,200,112,.015f,.025f,.035f,.8f);
+        glColor4f(.8f,.82f,.84f,1);Text(1066,254,"EQUIPPED / HOLD TAB");
+        Text(1066,278,ToolWheel::Name(tools.Equipped()));
+        Text(1066,304,pipePuzzle.HasCard()?"2F CARD: OWNED":"2F CARD: MISSING");
+        char charges[40];sprintf_s(charges,"MEDKIT CHARGES: %d",tools.Medkits());Text(1066,326,charges);
+        if(tools.Scanning()) {
+            float best=10000;int index=0;
+            for(int i=0;i<4;++i) {
+                float x,z;ColorQuest::World(i,39,43.5f,x,z);
+                float d=std::sqrt((x-px)*(x-px)+(z-pz)*(z-pz)+(py+4)*(py+4));
+                if(d<best){best=d;index=i;}
+            }
+            char scan[96];sprintf_s(scan,"SCAN / NEAREST CORE: %s / %.1f m / B1",ColorQuest::Name(index),best);
+            glColor4f(.7f,.9f,.8f,1);Text(22,220,scan);
         }
         for(int i=0;i<4;++i) {
             glColor4f(.72f,.8f,.85f,1); char coreLabel[64];
@@ -114,9 +114,9 @@ class ShipScene {
         glDisable(GL_BLEND); glColor4f(1,1,1,1);
     }
 public:
+    void Button(int button,int state) {if(button==GLUT_LEFT_BUTTON)tools.Button(state==GLUT_DOWN,!overview&&captured);}
     void ReleaseGraphics() { metalMaterial.Release(); postProcessing.Release(); }
     void SetHealth(float value) { health=Clamp(value,0,100); }
-    void SetToolCount(int slot,int count) { if(slot>=0&&slot<4) toolSlots[slot].count=count>0?count:0; }
     ShipScene() {
         lastTime=glutGet(GLUT_ELAPSED_TIME);
         glEnable(GL_DEPTH_TEST); glEnable(GL_NORMALIZE);
@@ -127,8 +127,16 @@ public:
     void Key(unsigned char k,bool down) {
         if(k>='A' && k<='Z') k+=32;
         keys[k]=down;
+        if(k==9) {
+            if(down&&!overview&&captured) {
+                if(!tools.IsOpen()) {tools.Begin(width,height);glutSetCursor(GLUT_CURSOR_INHERIT);glutWarpPointer(width/2,height/2);}
+            } else if(!down&&tools.IsOpen()) {
+                tools.End();glutSetCursor(GLUT_CURSOR_NONE);glutWarpPointer(width/2,height/2);
+            }
+            return;
+        }
+        if(tools.IsOpen()) {if(down&&k==27){tools.Cancel();glutSetCursor(GLUT_CURSOR_NONE);glutWarpPointer(width/2,height/2);}return;}
         if(!down) return;
-        if(k>='1'&&k<='4') selectedTool=k-'1';
         // Temporary UI preview controls until enemy damage and healing are connected.
         if(k=='[') SetHealth(health-10);
         if(k==']') SetHealth(health+10);
@@ -140,6 +148,7 @@ public:
         if(captured&&!overview) glutWarpPointer(width/2,height/2);
     }
     void Mouse(int x,int y) {
+        if(tools.IsOpen()){tools.Mouse(x,y,width,height);return;}
         if(!captured||overview) return;
         int dx=x-width/2,dy=y-height/2;
         if(!dx&&!dy) return;
@@ -151,8 +160,12 @@ public:
         float dt=Clamp((now-lastTime)/1000.f,0,.05f); lastTime=now;
         heartbeatPhase+=dt*(1.0f+2.0f*(1-health/100.f));
         heartbeatPhase=std::fmod(heartbeatPhase,1000.f);
-        bool active=!overview&&captured&&GetForegroundWindow()==GetActiveWindow();
-        pipePuzzle.Update(dt,px,py,pz,yaw,pitch,keys['e']&&active,active,[this](float x,float y,float z) {
+        bool focused=GetForegroundWindow()==GetActiveWindow();
+        if(!focused&&tools.IsOpen()){tools.Cancel();glutSetCursor(GLUT_CURSOR_NONE);}
+        bool active=!overview&&captured&&focused&&!tools.IsOpen();
+        tools.Update(dt,health,active);
+        metalMaterial.flashlight=tools.LightOn();
+        pipePuzzle.Update(dt,px,py,pz,yaw,pitch,(keys['e']||tools.RepairHeld())&&active,active,[this](float x,float y,float z) {
             // Prevent interactions through bulkheads, slabs or furniture.
             for(int i=1;i<24;++i) {
                 float t=i/24.f,rx=px+(x-px)*t,ry=py+1.65f+(y-py-1.65f)*t,rz=pz+(z-pz)*t;
@@ -163,7 +176,6 @@ public:
             }
             return true;
         });
-        toolSlots[1].count=pipePuzzle.HasCard()?1:0;
         // Poll Shift because freeglut's modifier mask is only valid inside input callbacks.
         bool shift=(GetAsyncKeyState(VK_SHIFT)&0x8000)!=0;
         bool moving=active&&(keys['w']!=keys['s']||keys['a']!=keys['d']);
@@ -266,6 +278,7 @@ public:
             }
         }
         if(hdr) postProcessing.Apply();
+        if(!overview) tools.DrawHeld(width,height);
         glDisable(GL_FOG); glDisable(GL_LIGHTING); glDisable(GL_DEPTH_TEST);
         glMatrixMode(GL_PROJECTION); glLoadIdentity(); glOrtho(0,width,height,0,-1,1);
         glMatrixMode(GL_MODELVIEW); glLoadIdentity();
@@ -284,7 +297,9 @@ public:
             if(pipePuzzle.Prompt()[0]&&pipePuzzle.RepairProgress()>0&&pipePuzzle.RepairProgress()<1)
                 Panel(490,612,300*pipePuzzle.RepairProgress(),4,.85f,.25f,.2f,1);
         }
+        tools.DrawMenu(width,height);
         glEnable(GL_DEPTH_TEST); glutSwapBuffers();
     }
 };
+
 

@@ -16,6 +16,7 @@ void Resize(int w,int h) { if(scene) scene->Resize(w,h); }
 void KeyDown(unsigned char k,int,int) { if(scene) scene->Key(k,true); }
 void KeyUp(unsigned char k,int,int) { if(scene) scene->Key(k,false); }
 void Motion(int x,int y) { if(scene) scene->Mouse(x,y); }
+void Button(int button,int state,int,int) {if(scene)scene->Button(button,state);}
 void Close() { if(scene) scene->ReleaseGraphics(); }
 int main(int argc,char** argv) {
     glutInit(&argc,argv);
@@ -29,6 +30,7 @@ int main(int argc,char** argv) {
     glutKeyboardFunc(KeyDown); glutKeyboardUpFunc(KeyUp);
     glutPassiveMotionFunc(Motion); glutMotionFunc(Motion); glutIgnoreKeyRepeat(1);
     glutCloseFunc(Close);
+    glutMouseFunc(Button);
     glutTimerFunc(16,Timer,0);
     glutMainLoop();
     delete scene; scene=nullptr;
