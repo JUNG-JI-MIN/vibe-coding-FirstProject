@@ -7,32 +7,101 @@ but WITHOUT ANY WARRANTY.
 */
 #include "stdafx.h"
 #include <iostream>
-#include "ShipScene.h"
+#include "StationScene.h"
 
-ShipScene* scene=nullptr;
-void Display() { if(scene) scene->Draw(); }
-void Timer(int) { if(scene) { scene->Update(); glutPostRedisplay(); } glutTimerFunc(16,Timer,0); }
-void Resize(int w,int h) { if(scene) scene->Resize(w,h); }
-void KeyDown(unsigned char k,int,int) { if(scene) scene->Key(k,true); }
-void KeyUp(unsigned char k,int,int) { if(scene) scene->Key(k,false); }
-void Motion(int x,int y) { if(scene) scene->Mouse(x,y); }
-void Button(int button,int state,int,int) {if(scene)scene->Button(button,state);}
-void Close() { if(scene) scene->ReleaseGraphics(); }
-int main(int argc,char** argv) {
-    glutInit(&argc,argv);
-    glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
-    glutInitWindowSize(1280,720);
-    glutCreateWindow("Vessel - 100x100 Three Deck Ship");
-    if(glewInit()!=GLEW_OK) { std::cerr<<"OpenGL initialization failed\n"; return 1; }
-    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-    scene=new ShipScene();
-    glutDisplayFunc(Display); glutReshapeFunc(Resize);
-    glutKeyboardFunc(KeyDown); glutKeyboardUpFunc(KeyUp);
-    glutPassiveMotionFunc(Motion); glutMotionFunc(Motion); glutIgnoreKeyRepeat(1);
+StationScene* scene = nullptr;
+
+void Display()
+{
+    if (scene)
+    {
+        scene->Draw();
+    }
+}
+
+void Timer(int)
+{
+    if (scene)
+    {
+        scene->Update();
+        glutPostRedisplay();
+    }
+    glutTimerFunc(16, Timer, 0);
+}
+
+void Resize(int w, int h)
+{
+    if (scene)
+    {
+        scene->Resize(w, h);
+    }
+}
+
+void KeyDown(unsigned char k, int, int)
+{
+    if (scene)
+    {
+        scene->Key(k, true);
+    }
+}
+
+void KeyUp(unsigned char k, int, int)
+{
+    if (scene)
+    {
+        scene->Key(k, false);
+    }
+}
+
+void Motion(int x, int y)
+{
+    if (scene)
+    {
+        scene->Mouse(x, y);
+    }
+}
+
+void Button(int button, int state, int x, int y)
+{
+    if (scene)
+    {
+        scene->Button(button, state, x, y);
+    }
+}
+
+void Close()
+{
+    if (scene)
+    {
+        scene->ReleaseGraphics();
+    }
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowSize(1280, 720);
+    glutCreateWindow("Orbital Station - Double Ring Survival Prototype");
+    if (glewInit() != GLEW_OK)
+    {
+        std::cerr << "OpenGL initialization failed\n";
+        return 1;
+    }
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+    scene = new StationScene();
+    glutDisplayFunc(Display);
+    glutReshapeFunc(Resize);
+    glutKeyboardFunc(KeyDown);
+    glutKeyboardUpFunc(KeyUp);
+    glutPassiveMotionFunc(Motion);
+    glutMotionFunc(Motion);
+    glutIgnoreKeyRepeat(1);
     glutCloseFunc(Close);
     glutMouseFunc(Button);
-    glutTimerFunc(16,Timer,0);
+    glutTimerFunc(16, Timer, 0);
     glutMainLoop();
-    delete scene; scene=nullptr;
+    delete scene;
+    scene = nullptr;
     return 0;
 }
