@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright 2022 Lee Taek Hee (Tech University of Korea)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the What The Hell License. Do it plz.
@@ -82,7 +82,8 @@ int main(int argc, char** argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(1280, 720);
-    glutCreateWindow("Orbital Station - Double Ring Survival Prototype");
+    glutCreateWindow("Orbital Station");
+    SetWindowTextW(WindowFromDC(wglGetCurrentDC()), L"우주정거장 - 이중 고리형 생존 프로토타입");
     if (glewInit() != GLEW_OK)
     {
         std::cerr << "OpenGL initialization failed\n";

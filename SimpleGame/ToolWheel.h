@@ -1,4 +1,5 @@
-#pragma once
+﻿#pragma once
+#include "KoreanText.h"
 #include <cmath>
 #include "Dependencies/glew.h"
 #include "Dependencies/freeglut.h"
@@ -19,20 +20,16 @@ class ToolWheel
         glPopMatrix();
     }
 
-    static void Text(float x, float y, const char* p)
+    static void Text(float x, float y, const char* text)
     {
-        glRasterPos2f(x, y);
-        for (; *p; ++p)
-        {
-            glutBitmapCharacter(GLUT_BITMAP_8_BY_13, *p);
-        }
+        KoreanText::Draw(x, y, text);
     }
 
 public:
     static const char* Name(int i)
     {
-        const char* names[] = {"FLASHLIGHT", "DRILL", "WRENCH", "SCANNER", "MEDKIT"};
-        return i < 0 ? "BARE HANDS" : names[i];
+        const char* names[] = {u8"손전등", u8"드릴", u8"렌치", u8"스캐너", u8"구급상자"};
+        return i < 0 ? u8"맨손" : names[i];
     }
 
     bool IsOpen() const
@@ -304,17 +301,13 @@ public:
                 float x = w * .5f + std::cos(center) * 137 * scale,
                       y = h * .5f + std::sin(center) * 137 * scale;
                 const char* name = Name(i);
-                int len = 0;
-                for (const char* p = name; *p; ++p)
-                {
-                    ++len;
-                }
-                Text(x - len * 4, y, name);
+                Text(x - KoreanText::Width(name) * .5f, y, name);
             }
         }
         glColor4f(.85f, .85f, .85f, 1);
-        Text(w * .5f - 40, h * .5f, "BARE HANDS");
-        Text(w * .5f - 132, h * .5f + 240 * scale, "RELEASE TAB TO EQUIP / CENTER: NONE");
+        Text(w * .5f - KoreanText::Width(u8"맨손") * .5f, h * .5f, u8"맨손");
+        Text(w * .5f - KoreanText::Width(u8"Tab 놓기: 장착 / 중앙: 맨손") * .5f, h * .5f + 240 * scale,
+             u8"Tab 놓기: 장착 / 중앙: 맨손");
         // In-window marker supplements the native mouse pointer.
         glColor4f(1, 1, 1, 1);
         glBegin(GL_LINE_LOOP);

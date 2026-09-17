@@ -1,4 +1,5 @@
-#pragma once
+﻿#pragma once
+#include "KoreanText.h"
 #include <cmath>
 #include <cstdio>
 #include <string>
@@ -10,6 +11,10 @@
 
 class StationScene
 {
+    static constexpr float WalkSpeed = 3.6f;
+    static constexpr float RunSpeed = 6.45f;
+    static constexpr float MaxStamina = 150.f;
+
     Station::Layout layout;
     Station::Mission mission;
     ToolWheel tools;
@@ -17,7 +22,8 @@ class StationScene
     PostProcessing post;
     int width = 1280, height = 720, lastTime = 0;
     Station::Point player = {16, 67}, mapCenter = {100, 100};
-    float yaw = -70, pitch = 0, health = 100, stamina = 100, staminaAlpha = 0, heartbeat = 0, mapZoom = 1;
+    float yaw = -70, pitch = 0, health = 100, stamina = MaxStamina, staminaAlpha = 0, heartbeat = 0,
+          mapZoom = 1;
     bool keys[256] = {}, map = false, journal = false, help = false, captured = true, exhausted = false,
          showVents = true, drag = false;
     int dragX = 0, dragY = 0;
@@ -34,53 +40,40 @@ class StationScene
         glEnd();
     }
 
-    static void Text(float x, float y, const char* s)
+    static void Text(float x, float y, const char* text)
     {
-        glRasterPos2f(x, y);
-        for (; *s; ++s)
-        {
-            glutBitmapCharacter(GLUT_BITMAP_8_BY_13, *s);
-        }
+        KoreanText::Draw(x, y, text);
     }
 
     static void Wrap(float x, float y, const std::string& text, int columns = 66)
     {
-        std::string line, word;
+        // Decode first: a Korean character occupies multiple UTF-8 bytes.
+        const std::wstring characters = KoreanText::Decode(text.c_str());
         float baseline = y;
-        auto addWord = [&]()
+        int used = 0;
+        glRasterPos2f(x, baseline);
+        for (wchar_t character : characters)
         {
-            if (word.empty())
+            const auto& glyph = KoreanText::Get(character);
+            if (character == L'\n' || (used > 0 && used + glyph.width > columns * 8))
             {
-                return;
+                baseline += 21;
+                used = 0;
+                glRasterPos2f(x, baseline);
             }
-            if (line.size() + word.size() + 1 > size_t(columns))
+            if (character == L'\n' || (character == L' ' && used == 0))
             {
-                Text(x, baseline, line.c_str());
-                baseline += 19;
-                line.clear();
+                continue;
             }
-            if (!line.empty())
+            if (glyph.list)
             {
-                line += ' ';
-            }
-            line += word;
-            word.clear();
-        };
-        for (char c : text)
-        {
-            if (c == ' ')
-            {
-                addWord();
+                glCallList(glyph.list);
             }
             else
             {
-                word += c;
+                glBitmap(0, 0, 0, 0, float(glyph.width), 0, nullptr);
             }
-        }
-        addWord();
-        if (!line.empty())
-        {
-            Text(x, baseline, line.c_str());
+            used += glyph.width;
         }
     }
 
@@ -110,7 +103,8 @@ class StationScene
         player = {16, 67};
         yaw = -70;
         pitch = 0;
-        health = stamina = 100;
+        health = 100;
+        stamina = MaxStamina;
         exhausted = false;
         staminaAlpha = 0;
         heartbeat = 0;
@@ -196,32 +190,32 @@ class StationScene
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glColor4f(.65f, .8f, .83f, 1);
-        Text(24, 28, "ORBITAL STATION / MAIN DECK");
+        Text(24, 28, u8"우주정거장 / 주 갑판");
         Text(24, 49, layout.Area(player));
         Rect(18, 67, 530, 63, .02f, .045f, .055f, .82f);
         glColor4f(.68f, .8f, .8f, 1);
-        Text(30, 87, "CURRENT OBJECTIVE");
+        Text(30, 87, u8"현재 목표");
         glColor4f(.95f, .8f, .46f, 1);
         Text(30, 110, mission.Objective());
         glColor4f(.57f, .69f, .7f, 1);
-        Text(24, 153, "M MAP / V VENTS / J LOG / H HELP / TAB TOOLS");
+        Text(24, 153, u8"M 지도 / V 환풍구 / J 기록 / H 도움말 / Tab 도구");
         Rect(1044, 204, 212, 164, .018f, .033f, .04f, .88f);
         glColor4f(.68f, .78f, .79f, 1);
-        Text(1058, 227, "EQUIPPED / HOLD TAB");
+        Text(1058, 227, u8"장착 도구 / Tab 길게");
         Text(1058, 249, ToolWheel::Name(tools.Equipped()));
         char line[128];
-        sprintf_s(line, "CARD: %s", mission.Card() ? "ENGINEERING" : "MISSING");
+        sprintf_s(line, u8"카드: %s", mission.Card() ? u8"기술부" : u8"없음");
         Text(1058, 274, line);
-        sprintf_s(line, "MEDKITS: %d", tools.Medkits());
+        sprintf_s(line, u8"구급상자: %d개", tools.Medkits());
         Text(1058, 296, line);
-        sprintf_s(line, "NAV:%s PWR:%s FUEL:%s", mission.Done(12) ? "Y" : "-", mission.Done(15) ? "Y" : "-",
-                  mission.Done(17) ? "Y" : "-");
+        sprintf_s(line, u8"항법:%s 전력:%s 연료:%s", mission.Done(12) ? u8"유" : "-",
+                  mission.Done(15) ? u8"유" : "-", mission.Done(17) ? u8"유" : "-");
         Text(1058, 320, line);
-        Text(1058, 344, mission.Power() ? "STATION POWER: ONLINE" : "STATION POWER: EMERG");
+        Text(1058, 344, mission.Power() ? u8"정거장 전력: 정상" : u8"정거장 전력: 비상");
         if (tools.Scanning())
         {
             int target = mission.NearestActionable(player);
-            sprintf_s(line, "SCAN / %s / %.1f m", layout.rooms[mission.tasks[target].room].code,
+            sprintf_s(line, u8"탐지 / %s / %.1f m", layout.rooms[mission.tasks[target].room].code,
                       Station::Distance(player, mission.tasks[target].p));
             glColor4f(.48f, .89f, .68f, 1);
             Text(24, 180, line);
@@ -232,7 +226,7 @@ class StationScene
         Rect(980, 557, 276, 137, .015f, .035f, .045f, .88f);
         Rect(980, 557, 3, 137, r, g, b);
         glColor4f(r, g, b, 1);
-        sprintf_s(line, "VITALS / ECG       HP %03d", int(health));
+        sprintf_s(line, u8"심전도 / 체력 %03d", int(health));
         Text(996, 582, line);
         glColor4f(.18f, .38f, .43f, .25f);
         glBegin(GL_LINES);
@@ -273,13 +267,13 @@ class StationScene
             glVertex2f(996 + i, 633 - (health > 0 ? pulse * 27 : 0));
         }
         glEnd();
-        Text(996, 679, health < 30 ? "CRITICAL" : "STABLE");
+        Text(996, 679, health < 30 ? u8"위험" : u8"안정");
         if (staminaAlpha > 0)
         {
             glColor4f(1, 1, 1, staminaAlpha);
-            Text(490, 649, exhausted ? "RECOVERING" : "STAMINA");
+            Text(490, 649, exhausted ? u8"회복 중" : u8"스태미너");
             Rect(490, 661, 300, 5, 1, 1, 1, staminaAlpha * .15f);
-            Rect(490, 661, stamina * 3, 5, 1, 1, 1, staminaAlpha * .9f);
+            Rect(490, 661, 300 * stamina / MaxStamina, 5, 1, 1, 1, staminaAlpha * .9f);
         }
         std::string prompt = mission.Prompt();
         if (!prompt.empty())
@@ -312,20 +306,20 @@ class StationScene
         {
             Rect(220, 130, 840, 470, .015f, .027f, .035f, .97f);
             glColor4f(.7f, .86f, .85f, 1);
-            Text(246, 163, help ? "FIELD MANUAL / H CLOSE" : "STATION LOG / J CLOSE");
+            Text(246, 163, help ? u8"조작 안내 / H 닫기" : u8"정거장 기록 / J 닫기");
             if (help)
             {
                 const char* lines[] = {
-                    "WASD move / SHIFT sprint / Mouse look / ESC release mouse",
-                    "E interact / Hold E when prompted / Incomplete work is retained",
-                    "TAB hold: select tool with mouse / Release TAB to equip",
-                    "Center of tool wheel: bare hands / Left click: use tool",
-                    "M station map / Wheel or +/- zoom / Drag to pan / C center",
-                    "V toggle connected vent network on the map",
-                    "Follow gold objectives. Both rings and eight spokes remain usable.",
-                    "Broken outer bulkhead: detour via the inner maintenance ring.",
-                    "Current mode: local solo prototype. Multiplayer and enemy AI pending.",
-                    "After escape or health 0: R restart / [ ] preview health"};
+                    u8"WASD 이동 / Shift 달리기 / 마우스 시점 / Esc 마우스 해제",
+                    u8"E 상호작용 / 안내에 따라 E 길게 누르기 / 작업 진행도 유지",
+                    u8"Tab을 누른 채 마우스로 도구 선택 / Tab을 놓으면 장착",
+                    u8"도구 메뉴 중앙: 맨손 / 마우스 왼쪽 버튼: 도구 사용",
+                    u8"M 지도 / 휠 또는 +/- 확대·축소 / 드래그 이동 / C 중심 복귀",
+                    u8"V 지도에 연결된 환풍구망 표시·숨기기",
+                    u8"금색 목표를 따라가세요. 두 순환로와 여덟 연결 통로를 이용할 수 있습니다.",
+                    u8"외측 격벽이 파손되어 있습니다. 내측 정비 순환로로 우회하세요.",
+                    u8"현재 모드: 로컬 1인 프로토타입. 멀티플레이와 적 AI는 미구현입니다.",
+                    u8"탈출 또는 체력 소진 후 R 재시작 / [ ] 체력 미리보기"};
                 for (int i = 0; i < 10; ++i)
                 {
                     Text(246, 201 + i * 32.f, lines[i]);
@@ -345,8 +339,8 @@ class StationScene
         {
             Rect(0, 0, 1280, 720, .01f, .02f, .025f, .86f);
             glColor4f(.7f, .9f, .86f, 1);
-            Text(472, 318, mission.Won() ? "ESCAPE SEQUENCE COMPLETE" : "VITAL SIGNS LOST");
-            Text(448, 363, "R RESTART / M INSPECT STATION MAP");
+            Text(472, 318, mission.Won() ? u8"탈출 성공" : u8"생체 신호 소실");
+            Text(448, 363, u8"R 재시작 / M 정거장 지도 확인");
         }
         glDisable(GL_BLEND);
     }
@@ -464,8 +458,8 @@ class StationScene
         Rect(0, 0, float(width), 64, .016f, .03f, .045f, .98f);
         Rect(0, 64, 242, float(height - 64), .016f, .03f, .045f, .97f);
         glColor4f(.67f, .81f, .86f, 1);
-        Text(22, 28, "ORBITAL STATION / DOUBLE RING");
-        Text(22, 49, "MAIN DECK + CEILING VENT NETWORK");
+        Text(22, 28, u8"우주정거장 / 이중 고리형");
+        Text(22, 49, u8"주 갑판 + 천장 환풍구망");
         float labelY = 104;
         for (const auto& room : layout.rooms)
         {
@@ -475,9 +469,9 @@ class StationScene
             labelY += 43;
         }
         glColor4f(.8f, .62f, .26f, 1);
-        Wrap(16, labelY + 10, std::string("GOAL: ") + mission.Objective(), 26);
+        Wrap(16, labelY + 10, std::string(u8"목표: ") + mission.Objective(), 26);
         glColor4f(.66f, .76f, .78f, 1);
-        Text(260, float(height - 22), "M CLOSE / V VENTS / WHEEL +/- ZOOM / DRAG PAN / C CENTER");
+        Text(260, float(height - 22), u8"M 닫기 / V 환풍구 / 휠 +/- 확대·축소 / 드래그 이동 / C 중심");
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glutSwapBuffers();
@@ -508,6 +502,7 @@ public:
 
     void ReleaseGraphics()
     {
+        KoreanText::Release();
         layout.Release();
         material.Release();
         post.Release();
@@ -721,17 +716,17 @@ public:
             if (len > 0)
             {
                 run = (GetAsyncKeyState(VK_SHIFT) & 0x8000) && !exhausted && stamina > 0;
-                float step = (run ? 4.3f : 2.4f) * dt / len, a = yaw * Station::Pi / 180;
+                float step = (run ? RunSpeed : WalkSpeed) * dt / len, a = yaw * Station::Pi / 180;
                 moved = Move((std::sin(a) * forward + std::cos(a) * side) * step,
                              (-std::cos(a) * forward + std::sin(a) * side) * step);
             }
         }
-        stamina = Station::Clamp(stamina + (run && moved > .00001f ? -22 : 12) * dt, 0, 100);
+        stamina = Station::Clamp(stamina + (run && moved > .00001f ? -22 : 12) * dt, 0, MaxStamina);
         if (stamina <= 0)
         {
             exhausted = true;
         }
-        staminaAlpha = Station::Clamp(staminaAlpha + (stamina < 100 ? 5 : -2) * dt, 0, 1);
+        staminaAlpha = Station::Clamp(staminaAlpha + (stamina < MaxStamina ? 5 : -2) * dt, 0, 1);
     }
 
     void Draw()

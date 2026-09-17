@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <array>
 #include <cmath>
@@ -503,15 +503,15 @@ namespace Station
 
         Layout()
         {
-            rooms = {{"LIFE SUPPORT", "LIFE", 5, 51, 27, 81, 4, {16, 66}},
-                     {"GENERATOR", "PWR", 7, 122, 33, 150, 3, {20, 136}},
-                     {"MEDICAL", "MED", 173, 59, 195, 83, 5, {184, 71}},
-                     {"HABITATION", "CREW", 174, 112, 196, 138, 2, {185, 125}},
-                     {"COMMAND", "CMD", 88, 88, 112, 112, 3, {100, 100}},
-                     {"RESEARCH", "LAB", 87, 6, 113, 25, 5, {100, 15}},
-                     {"CARGO", "STORE", 47, 168, 73, 192, 3, {60, 180}},
-                     {"DOCKING BAY", "DOCK", 82, 173, 118, 198, 2, {100, 186}},
-                     {"ESCAPE CRAFT", "ESC", 169, 14, 194, 35, 2, {182, 24}}};
+            rooms = {{u8"생명유지실", u8"생명유지", 5, 51, 27, 81, 4, {16, 66}},
+                     {u8"발전실", u8"발전", 7, 122, 33, 150, 3, {20, 136}},
+                     {u8"의료실", u8"의료", 173, 59, 195, 83, 5, {184, 71}},
+                     {u8"거주구", u8"거주", 174, 112, 196, 138, 2, {185, 125}},
+                     {u8"관제실", u8"관제", 88, 88, 112, 112, 3, {100, 100}},
+                     {u8"연구실", u8"연구", 87, 6, 113, 25, 5, {100, 15}},
+                     {u8"창고", u8"창고", 47, 168, 73, 192, 3, {60, 180}},
+                     {u8"도킹 베이", u8"도킹", 82, 173, 118, 198, 2, {100, 186}},
+                     {u8"탈출정", u8"탈출정", 169, 14, 194, 35, 2, {182, 24}}};
             branches = {{{44, 66}, {26, 66}, 2},     {{45, 136}, {32, 136}, 2}, {{160, 72}, {174, 72}, 2},
                         {{161, 125}, {175, 125}, 2}, {{100, 33}, {100, 24}, 2}, {{65, 156}, {61, 169}, 2},
                         {{100, 165}, {100, 174}, 2}, {{147, 53}, {177, 29}, 2}};
@@ -520,14 +520,14 @@ namespace Station
             {
                 passages.push_back({{100, 100}, Polar(66, i * Pi / 4), 2});
             }
-            doors.push_back({{29, 66}, 0, 4, 0, "PRESSURE LOCK"});
+            doors.push_back({{29, 66}, 0, 4, 0, u8"압력 격벽"});
             for (int i = 0; i < 8; ++i)
             {
-                doors.push_back({Polar(13, i * Pi / 4), i * Pi / 4, 4, 1, "COMMAND ACCESS"});
+                doors.push_back({Polar(13, i * Pi / 4), i * Pi / 4, 4, 1, u8"관제실 출입문"});
             }
-            doors.push_back({{100, 27}, Pi / 2, 4, 2, "RESEARCH ACCESS"});
+            doors.push_back({{100, 27}, Pi / 2, 4, 2, u8"연구실 출입문"});
             // Damaged outer-ring sector can always be bypassed through the inner ring.
-            doors.push_back({Polar(66, -Pi / 12), -Pi / 12 + Pi / 2, 8, 3, "DAMAGED BULKHEAD"});
+            doors.push_back({Polar(66, -Pi / 12), -Pi / 12 + Pi / 2, 8, 3, u8"파손된 격벽"});
             BuildVents();
             for (int z = 0; z < 200; ++z)
             {
@@ -604,8 +604,8 @@ namespace Station
                 return rooms[r].name;
             }
             float radius = Distance(p, {100, 100});
-            return radius < 44 ? "INNER MAINTENANCE RING"
-                               : (radius > 60 ? "OUTER HABITAT RING" : "RADIAL CONNECTOR");
+            return radius < 44 ? u8"내측 정비 순환로"
+                               : (radius > 60 ? u8"외측 생활 순환로" : u8"방사형 연결 통로");
         }
 
         float FloorDistance(Point p) const

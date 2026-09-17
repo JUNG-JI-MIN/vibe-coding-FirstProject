@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include <array>
@@ -127,130 +127,132 @@ namespace Station
 
         Mission(Layout& layout)
         {
-            tasks = {{"READ PRESSURE GAUGE",
-                      "Pressure imbalance: isolate valve A, then balance valve B.",
+            tasks = {{u8"압력계 확인",
+                      u8"압력 불균형 발생. 밸브 A를 잠근 뒤 밸브 B로 압력을 조절하세요.",
                       {11, 65},
                       0,
                       0,
                       false},
-                     {"ISOLATE VALVE A",
-                      "Valve A isolated. Balance valve B on the other side of the room.",
+                     {u8"밸브 A 잠그기",
+                      u8"밸브 A를 잠갔습니다. 방 반대편의 밸브 B로 압력을 조절하세요.",
                       {21, 61},
                       1.2f,
                       0,
                       false},
-                     {"BALANCE VALVE B",
-                      "Pressure stable. Life-support emergency door released. Find the generator.",
+                     {u8"밸브 B 압력 조절",
+                      u8"압력이 안정되어 생명유지실 비상문이 열렸습니다. 발전실로 이동하세요.",
                       {21, 72},
                       1.5f,
                       0,
                       false},
-                     {"READ POWER DIAGRAM",
-                      "Cooling loop first, then main breaker. Controls are separated for crew operation.",
+                     {u8"전력 계통도 확인",
+                      u8"냉각 회로를 먼저 수리한 뒤 주 차단기를 켜세요. 제어 장치는 승무원 분담 작업을 위해 "
+                      u8"떨어져 있습니다.",
                       {17, 128},
                       0,
                       1,
                       false},
-                     {"REPAIR COOLING LOOP",
-                      "Cooling loop repaired. The main breaker can now be engaged.",
+                     {u8"냉각 회로 수리",
+                      u8"냉각 회로 수리 완료. 주 차단기를 켤 수 있습니다.",
                       {27, 143},
                       2.5f,
                       1,
                       false},
-                     {"ENGAGE MAIN BREAKER",
-                      "Emergency power online. Medical archive is available.",
+                     {u8"주 차단기 켜기",
+                      u8"비상 전력이 복구되었습니다. 의료 기록을 열람할 수 있습니다.",
                       {12, 143},
                       0,
                       1,
                       false},
-                     {"READ MEDICAL ARCHIVE",
-                      "Technician I. Han was transferred to habitation berth C-07. Check the crew log.",
+                     {u8"의료 기록 확인",
+                      u8"기술자 I. Han이 거주구 C-07 침상으로 이송되었습니다. 승무원 기록을 확인하세요.",
                       {181, 68},
                       0,
                       2,
                       false},
-                     {"READ CREW LOG C-07",
-                      "C-07: technician last seen near the covered casualty in the southeast corner.",
+                     {u8"C-07 승무원 기록 확인",
+                      u8"C-07 기록: 기술자는 남동쪽 구석의 덮개로 가려진 사상자 근처에서 마지막으로 "
+                      u8"목격되었습니다.",
                       {182, 121},
                       0,
                       3,
                       false},
-                     {"RECOVER ACCESS CARD",
-                      "Engineering access recovered. Command bulkheads are unlocked.",
+                     {u8"출입 카드 회수",
+                      u8"기술부 출입 카드를 확보했습니다. 관제실 격벽의 잠금이 해제되었습니다.",
                       {191, 130},
                       0,
                       3,
                       true},
-                     {"CHECK STATION STATUS",
-                      "Escape craft detected northeast. Inspect it, then recover navigation, power and fuel "
-                      "modules.",
+                     {u8"정거장 상태 확인",
+                      u8"북동쪽에서 탈출정이 감지되었습니다. 상태를 확인한 뒤 항법 장치, 전력 모듈, 연료를 "
+                      u8"확보하세요.",
                       {100, 96},
                       0,
                       4,
                       false},
-                     {"INSPECT ESCAPE CRAFT",
-                      "Craft offline: navigation unit, B-12 power module and fuel coupler required.",
+                     {u8"탈출정 점검",
+                      u8"탈출정 작동 불가. 항법 장치, B-12 전력 모듈과 연료 연결 장치가 필요합니다.",
                       {180, 23},
                       0,
                       8,
                       false},
-                     {"ISOLATE RESEARCH DAMPER",
-                      "Research vent branch isolated for 30 seconds. Navigation unit released.",
+                     {u8"연구실 환풍 차단기 닫기",
+                      u8"연구실 환풍 통로가 30초 동안 차단됩니다. 항법 장치를 회수할 수 있습니다.",
                       {96, 10},
                       2,
                       5,
                       false},
-                     {"TAKE NAVIGATION UNIT",
-                      "Navigation unit secured. Remaining components are in cargo and docking.",
+                     {u8"항법 장치 회수",
+                      u8"항법 장치를 확보했습니다. 나머지 부품은 창고와 도킹 베이에 있습니다.",
                       {104, 20},
                       0,
                       5,
                       true},
-                     {"READ CARGO MANIFEST",
-                      "Compatible power module: B-12. Use the cargo lift to release its transport cradle.",
+                     {u8"화물 목록 확인",
+                      u8"호환 전력 모듈: B-12. 화물 승강기로 운반 받침대를 내리세요.",
                       {54, 175},
                       0,
                       6,
                       false},
-                     {"OPERATE CARGO LIFT",
-                      "B-12 cradle lowered. Retrieve the power module from the platform.",
+                     {u8"화물 승강기 조작",
+                      u8"B-12 받침대가 내려왔습니다. 승강대에서 전력 모듈을 회수하세요.",
                       {66, 173},
                       3,
                       6,
                       false},
-                     {"TAKE B-12 POWER MODULE", "B-12 power module secured.", {63, 183}, 0, 6, true},
-                     {"RELEASE DOCK COUPLER",
-                      "Service-craft fuel coupler released. Collect the sealed fuel cell.",
+                     {u8"B-12 전력 모듈 회수", u8"B-12 전력 모듈을 확보했습니다.", {63, 183}, 0, 6, true},
+                     {u8"도킹 연료 연결 장치 해제",
+                      u8"작업정의 연료 연결 장치가 해제되었습니다. 밀봉된 연료 전지를 회수하세요.",
                       {110, 180},
                       2,
                       7,
                       false},
-                     {"TAKE FUEL CELL",
-                      "Fuel cell secured. Return to the northeast escape craft.",
+                     {u8"연료 전지 회수",
+                      u8"연료 전지를 확보했습니다. 북동쪽 탈출정으로 돌아가세요.",
                       {90, 190},
                       0,
                       7,
                       true},
-                     {"INSTALL ESCAPE COMPONENTS",
-                      "All components installed. Purge the cabin and release the external clamp.",
+                     {u8"탈출정 부품 설치",
+                      u8"모든 부품을 설치했습니다. 선실 공기를 정화하고 외부 고정 장치를 해제하세요.",
                       {180, 23},
                       2,
                       8,
                       false},
-                     {"PURGE ESCAPE CABIN",
-                      "Cabin pressure stable. Finish external checks before boarding.",
+                     {u8"탈출정 선실 정화",
+                      u8"선실 압력이 안정되었습니다. 탑승 전 외부 점검을 마치세요.",
                       {173, 30},
                       2,
                       8,
                       false},
-                     {"RELEASE ESCAPE CLAMP",
-                      "External clamp released. Board the escape craft and initiate launch.",
+                     {u8"탈출정 고정 장치 해제",
+                      u8"외부 고정 장치를 해제했습니다. 탈출정에 탑승하여 발진하세요.",
                       {189, 30},
                       2,
                       8,
                       false},
-                     {"BOARD AND LAUNCH",
-                      "Escape sequence complete. Local station prototype finished.",
+                     {u8"탑승 및 발진",
+                      u8"탈출에 성공했습니다. 우주정거장 프로토타입 플레이를 완료했습니다.",
                       {183, 18},
                       1.5f,
                       8,
@@ -265,8 +267,8 @@ namespace Station
                 const auto& t = tasks[i];
                 layout.AddBox(t.p.x, .48f, t.p.z, .7f, .96f, .7f, 3, true);
             }
-            message =
-                "You wake in life support. Read the pressure gauge. Tab equips tools; left-click uses them.";
+            message = u8"생명유지실에서 깨어났습니다. 압력계를 확인하세요. Tab으로 도구를 장착하고 마우스 "
+                      u8"왼쪽 버튼으로 사용합니다.";
             messageTime = 12;
             log.push_back(message);
         }
@@ -330,7 +332,7 @@ namespace Station
             emissionClock = 0;
             elapsed = 0;
             log.clear();
-            message = "You wake in life support. Read the pressure gauge.";
+            message = u8"생명유지실에서 깨어났습니다. 압력계를 확인하세요.";
             messageTime = 10;
             log.push_back(message);
         }
@@ -371,7 +373,7 @@ namespace Station
 
         const char* Objective() const
         {
-            return Won() ? "ESCAPED" : tasks[ObjectiveIndex()].label;
+            return Won() ? u8"탈출 성공" : tasks[ObjectiveIndex()].label;
         }
 
         std::string Prompt() const
@@ -382,13 +384,13 @@ namespace Station
             }
             if (done[focus])
             {
-                return std::string("E REVIEW / ") + tasks[focus].label;
+                return std::string(u8"E 다시 확인 / ") + tasks[focus].label;
             }
             if (!Ready(focus))
             {
-                return "LOCKED / COMPLETE THE CURRENT OBJECTIVE FIRST";
+                return u8"잠김 / 현재 목표를 먼저 완료하세요";
             }
-            return std::string(tasks[focus].hold > 0 ? "HOLD E / " : "E / ") + tasks[focus].label;
+            return std::string(tasks[focus].hold > 0 ? u8"E 길게 누르기 / " : "E / ") + tasks[focus].label;
         }
 
         bool Blocks(const Layout& layout, Point p, float radius = .28f) const
