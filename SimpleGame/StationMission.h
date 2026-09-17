@@ -4,6 +4,7 @@
 #include <array>
 #include <cstdio>
 #include "StationLayout.h"
+#include "StationEquipment.h"
 #include "Dependencies/freeglut.h"
 
 namespace Station
@@ -307,6 +308,8 @@ namespace Station
                       1.5f,
                       8,
                       false}};
+            tasks[5].hold = .9f;
+            tasks[7].hold = 1.1f;
             doorSlide.assign(layout.doors.size(), 0);
             doorHold.assign(layout.doors.size(), 0);
             for (int i = 0; i < int(tasks.size()); ++i)
@@ -316,7 +319,7 @@ namespace Station
                     continue;
                 }
                 const auto& t = tasks[i];
-                layout.AddBox(t.p.x, .48f, t.p.z, .7f, .96f, .7f, 3, true);
+                Equipment::Furnish(layout, i, t.p);
                 if (i == 1 || i == 2)
                 {
                     // Connect the horizontal handwheel's valve body to the existing pipe riser.
@@ -453,6 +456,10 @@ namespace Station
             {
                 return u8"잠김 / 현재 목표를 먼저 완료하세요";
             }
+            if (focus == 4)
+            {
+                return u8"드릴 또는 렌치 장착 후 좌클릭 유지 / 냉각 회로 수리";
+            }
             return std::string(tasks[focus].hold > 0 ? u8"E 길게 누르기 / " : "E / ") + tasks[focus].label;
         }
 
@@ -542,13 +549,14 @@ namespace Station
                         continue;
                     }
                     const auto& task = tasks[i];
-                    float dx = task.p.x - player.x, dz = task.p.z - player.z, dy = 1.22f - 1.65f;
+                    float dx = task.p.x - player.x, dz = task.p.z - player.z,
+                          dy = Equipment::Height(i) - 1.65f;
                     float dist = std::sqrt(dx * dx + dy * dy + dz * dz);
                     if (dist < nearest && dist > .01f &&
                         (dx * std::sin(a) * std::cos(b) - dy * std::sin(b) - dz * std::cos(a) * std::cos(b)) /
                                 dist >
                             .82f &&
-                        Visible(layout, player, task.p, 1.22f))
+                        Visible(layout, player, task.p, Equipment::Height(i)))
                     {
                         nearest = dist;
                         focus = i;
@@ -570,7 +578,7 @@ namespace Station
                     {
                         Complete(focus);
                     }
-                    else if (tasks[focus].hold > 0 && (e || repairTool))
+                    else if (tasks[focus].hold > 0 && (focus == 4 ? repairTool : e))
                     {
                         progress[focus] = Clamp(progress[focus] + dt / tasks[focus].hold, 0, 1);
                         if (progress[focus] >= 1)
@@ -655,29 +663,20 @@ namespace Station
             }
             for (int i = 0; i < int(tasks.size()); ++i)
             {
-                if (i == 18)
+                if (i == 18 && !done[10])
                 {
                     continue;
                 }
                 const auto& task = tasks[i];
-                if (task.pickup)
+                if (task.pickup && done[i])
                 {
-                    if (done[i])
-                    {
-                        continue;
-                    }
-                    if (hdr)
-                    {
-                        material.Use(.55f, .3f, 0, true);
-                    }
-                    glColor3f(.62f, .69f, .64f);
-                    glPushMatrix();
-                    glTranslatef(task.p.x, 1.16f, task.p.z);
-                    glRotatef(elapsed * 20, 0, 1, 0);
-                    glutSolidCube(.26);
-                    glPopMatrix();
+                    continue;
                 }
-                else if (i == 1 || i == 2)
+                if (i == 10 && done[10])
+                {
+                    continue;
+                }
+                if (i == 1 || i == 2)
                 {
                     if (hdr)
                     {
@@ -699,12 +698,8 @@ namespace Station
                 }
                 else
                 {
-                    if (hdr)
-                    {
-                        material.Use(.1f, .4f, 2, true);
-                    }
-                    glColor3f(done[i] ? .12f : .12f, done[i] ? .68f : .38f, done[i] ? .4f : .68f);
-                    Cube(task.p.x, 1.07f, task.p.z, .56f, .16f, .5f);
+                    Equipment::Draw(i, task.p, progress[i], done[i], i == 0 ? done[2] : Power(), elapsed, hdr,
+                                    material);
                 }
             }
             // The cargo cradle descends as work progresses, even if the operator pauses.

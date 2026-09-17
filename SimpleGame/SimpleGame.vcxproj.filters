@@ -70,4 +70,6 @@
     <None Include="Shaders\PostProcessing.fs"><Filter>소스 파일\Shaders</Filter></None>
   </ItemGroup>
   <ItemGroup><ClInclude Include="KoreanText.h"><Filter>헤더 파일</Filter></ClInclude></ItemGroup>
+  <ItemGroup><ClInclude Include="StationCabinet.h"><Filter>Station</Filter></ClInclude></ItemGroup>
+  <ItemGroup><ClInclude Include="StationEquipment.h"><Filter>Station</Filter></ClInclude></ItemGroup>
 </Project>

@@ -71,6 +71,7 @@ namespace Station
         float x, y, z, w, h, d;
         int material;
         bool solid;
+        bool visible = true;
     };
 
     struct Lamp
@@ -306,6 +307,20 @@ namespace Station
             AddBox(x, 4.18f, z, 1.2f, .09f, .3f, warm ? 9 : 8, false);
         }
 
+        void Tank(float x, float z, float bottom, float height, float radius, int material)
+        {
+            for (int i = 0; i < 20; ++i)
+            {
+                float a = i * 2 * Pi / 20, b = (i + 1) * 2 * Pi / 20;
+                Point p = {x + std::cos(a) * radius, z + std::sin(a) * radius};
+                Point q = {x + std::cos(b) * radius, z + std::sin(b) * radius};
+                Quad(material, p, q, bottom, bottom + height, std::cos((a + b) * .5f),
+                     std::sin((a + b) * .5f));
+                Plane(material, {x, z}, q, p, bottom + height, 1);
+                Plane(material, {x, z}, p, q, bottom, -1);
+            }
+        }
+
         void Furnish()
         {
             // Life support: green oxygen equipment and recycling pipes, localized wet trays.
@@ -313,7 +328,11 @@ namespace Station
             {
                 for (float x : {9.f, 13.f, 17.f})
                 {
-                    AddBox(x, 1.45f, z, 1.5f, 2.9f, 1.5f, 4, true);
+                    AddObstacle(x, 1.45f, z, 1.5f, 2.9f, 1.5f);
+                    Tank(x, z, .12f, 2.6f, .62f, 4);
+                    Tank(x, z, .1f, .18f, .7f, 3);
+                    Tank(x, z, 2.58f, .18f, .7f, 3);
+                    Tank(x, z, 2.76f, .24f, .16f, 5);
                     AddBox(x, 2.4f, z + .78f, .7f, .12f, .04f, 8, false);
                     AddBox(x, .01f, z + 1.3f, 2.2f, .02f, .7f, 10, false);
                 }
@@ -330,6 +349,10 @@ namespace Station
                 AddBox(x, 1.4f, 135, 4, 2.8f, 5, 3, true);
                 AddBox(x, 1.65f, 137.55f, 2, .4f, .05f, 9, false);
                 AddBox(x, 3.6f, 136, .2f, .2f, 20, 3, false);
+                for (int rib = 0; rib < 8; ++rib)
+                {
+                    AddBox(x, 2.84f, 133 + rib * .5f, 3.7f, .1f, .16f, 5, false);
+                }
             }
             for (int i = 0; i < 8; ++i)
             {
@@ -342,6 +365,12 @@ namespace Station
                 {
                     AddBox(x, .45f, z, 2.4f, .9f, 1, 5, true);
                     AddBox(x, .98f, z, 2.3f, .16f, .94f, 6, false);
+                    AddBox(x - .78f, 1.13f, z, .5f, .13f, .69f, 5, false);
+                    AddBox(x + 1.12f, .64f, z, .09f, .6f, 1.03f, 5, false);
+                    for (float side : {-.54f, .54f})
+                    {
+                        AddBox(x, 1.13f, z + side, 1.45f, .065f, .05f, 5, false);
+                    }
                     AddBox(x + 1.4f, 1.5f, z, .08f, 3, .08f, 5, false);
                 }
             }
@@ -352,13 +381,12 @@ namespace Station
                 {
                     AddBox(x, .38f, z, 2.1f, .76f, 1, 3, true);
                     AddBox(x, .82f, z, 2, .14f, .95f, 6, false);
+                    AddBox(x - .69f, .93f, z, .48f, .12f, .77f, 5, false);
+                    AddBox(x + .4f, .92f, z, .72f, .07f, .9f, 2, false);
+                    AddBox(x, 2.65f, z, 2.1f, .1f, 1.08f, 3, false);
                 }
             }
-            for (float x : {178.f, 182.f, 186.f})
-            {
-                AddBox(x, 1.1f, 136, 1, 2.2f, .7f, 2, true);
-                AddBox(x + .3f, 1.2f, 135.62f, .05f, .3f, .03f, 5, false);
-            }
+            // Habitation lockers are hollow hiding places created by CabinetSystem.
             // A covered casualty and dropped credential: story prop, no unrelated combat system.
             AddBox(192, .28f, 128, 1.8f, .55f, .65f, 6, true);
             // Research benches leave a central aisle.
@@ -366,6 +394,10 @@ namespace Station
             {
                 AddBox(x, .6f, 17, 3, 1.2f, 6, 5, true);
                 AddBox(x, 1.8f, 17, 1.2f, 1.2f, 1.2f, 4, true);
+                for (int sample = 0; sample < 5; ++sample)
+                {
+                    Tank(x - .9f, 15 + sample * .55f, 1.25f, .28f, .055f, 8);
+                }
             }
             // Command consoles around a central table, radial entry lanes stay open.
             AddBox(100, .7f, 100, 4, 1.4f, 3, 3, true);
@@ -381,8 +413,26 @@ namespace Station
             {
                 for (float z : {173.f, 180.f, 187.f})
                 {
-                    AddBox(x, 1.4f, z, 2, 2.8f, 3, 3, true);
-                    AddBox(x, 1.5f, z, 2.1f, .1f, 3.1f, 7, false);
+                    AddObstacle(x, 1.4f, z, 2, 2.8f, 3);
+                    for (float side : {-1.f, 1.f})
+                    {
+                        for (float end : {-1.f, 1.f})
+                        {
+                            AddBox(x + side * .94f, 1.4f, z + end * 1.4f, .12f, 2.8f, .12f, 7, false);
+                        }
+                    }
+                    for (float level : {.16f, 1.35f, 2.6f})
+                    {
+                        AddBox(x, level, z, 2.1f, .1f, 3.1f, 7, false);
+                        if (level < 2)
+                        {
+                            for (float end : {-.74f, .74f})
+                            {
+                                AddBox(x, level + .4f, z + end, 1.55f, .7f, 1.18f, 2, false);
+                                AddBox(x - .78f, level + .4f, z + end, .035f, .32f, .45f, 5, false);
+                            }
+                        }
+                    }
                 }
             }
             AddBox(63, .14f, 184, 4, .28f, 3, 3, true);
@@ -390,6 +440,11 @@ namespace Station
             AddBox(100, 1, 187, 6, 2, 10, 2, true);
             AddBox(100, 2.2f, 185, 3, .8f, 4, 5, true);
             AddBox(100, 3.6f, 185, 29, .4f, .6f, 7, false);
+            Tube({104, 180}, {110, 180}, .13f, .09f, 4);
+            for (int i = 0; i < 12; ++i)
+            {
+                AddBox(106, .025f, 177 + i * 1.6f, .65f, .035f, .28f, 7, false);
+            }
             for (float x : {85.f, 115.f})
             {
                 AddBox(x, 1.8f, 185, .4f, 3.6f, .4f, 3, true);
@@ -640,11 +695,19 @@ namespace Station
             boxes.push_back({x, y, z, w, h, d, mat, solid});
         }
 
+        void AddObstacle(float x, float y, float z, float w, float h, float d)
+        {
+            boxes.push_back({x, y, z, w, h, d, 3, true, false});
+        }
+
         void Finish()
         {
             for (const auto& b : boxes)
             {
-                BoxMesh(b);
+                if (b.visible)
+                {
+                    BoxMesh(b);
+                }
             }
             IndexObstacles();
         }

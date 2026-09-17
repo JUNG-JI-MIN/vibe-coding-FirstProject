@@ -167,6 +167,8 @@
     <ClInclude Include="ToolWheel.h" />
     <ClInclude Include="StationLayout.h" />
     <ClInclude Include="StationMission.h" />
+    <ClInclude Include="StationCabinet.h" />
+    <ClInclude Include="StationEquipment.h" />
     <ClInclude Include="StationScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

@@ -7,6 +7,7 @@
 #include "ToolWheel.h"
 #include "PostProcessing.h"
 #include "MetalMaterial.h"
+#include "StationCabinet.h"
 #pragma comment(lib, "opengl32.lib")
 
 class StationScene
@@ -17,6 +18,9 @@ class StationScene
 
     Station::Layout layout;
     Station::Mission mission;
+    Station::CabinetSystem cabinets;
+    int cabinetFocus = -1;
+    float exitBlockedTime = 0;
     ToolWheel tools;
     MetalMaterial material;
     PostProcessing post;
@@ -99,6 +103,9 @@ class StationScene
     void Restart()
     {
         mission.Reset();
+        cabinets.Reset();
+        cabinetFocus = -1;
+        exitBlockedTime = 0;
         tools = ToolWheel();
         player = {16, 67};
         yaw = -70;
@@ -143,7 +150,7 @@ class StationScene
         return Station::Distance(old, player);
     }
 
-    void Sky()
+    void Sky(float viewYaw, float viewPitch)
     {
         glUseProgram(0);
         glDisable(GL_LIGHTING);
@@ -156,8 +163,8 @@ class StationScene
         glFrustum(-.07 * aspect, .07 * aspect, -.07, .07, .1, 2000);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        glRotatef(pitch, 1, 0, 0);
-        glRotatef(yaw, 0, 1, 0);
+        glRotatef(viewPitch, 1, 0, 0);
+        glRotatef(viewYaw, 0, 1, 0);
         unsigned seed = 7331;
         auto random = [&]()
         {
@@ -187,6 +194,17 @@ class StationScene
     void Hud()
     {
         Screen(1280, 720);
+        if (cabinets.IsInside() && health > 0)
+        {
+            glColor4f(.7f, .77f, .76f, 1);
+            Text(470, 673,
+                 cabinets.InTransition() ? u8"캐비넷 출입 중..." : u8"숨어 있는 중 / E 밖으로 나가기");
+            if (exitBlockedTime > 0)
+            {
+                Text(445, 645, u8"출구가 막혀 있습니다. 잠시 후 다시 시도하세요.");
+            }
+            return;
+        }
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glColor4f(.65f, .8f, .83f, 1);
@@ -275,13 +293,13 @@ class StationScene
             Rect(490, 661, 300, 5, 1, 1, 1, staminaAlpha * .15f);
             Rect(490, 661, 300 * stamina / MaxStamina, 5, 1, 1, 1, staminaAlpha * .9f);
         }
-        std::string prompt = mission.Prompt();
+        std::string prompt = cabinetFocus >= 0 ? u8"E 캐비넷에 들어가 숨기" : mission.Prompt();
         if (!prompt.empty())
         {
             Rect(342, 545, 596, 44, .018f, .03f, .04f, .85f);
             glColor4f(.93f, .8f, .55f, 1);
             Wrap(356, 565, prompt, 70);
-            if (mission.Progress() > 0 && mission.Progress() < 1)
+            if (cabinetFocus < 0 && mission.Progress() > 0 && mission.Progress() < 1)
             {
                 Rect(490, 598, 300 * mission.Progress(), 4, .45f, .78f, .72f);
             }
@@ -311,7 +329,7 @@ class StationScene
             {
                 const char* lines[] = {
                     u8"WASD 이동 / Shift 달리기 / 마우스 시점 / Esc 마우스 해제",
-                    u8"E 상호작용 / 안내에 따라 E 길게 누르기 / 작업 진행도 유지",
+                    u8"E 상호작용·캐비넷 출입 / 냉각 회로: 드릴·렌치로 좌클릭 유지",
                     u8"Tab을 누른 채 마우스로 도구 선택 / Tab을 놓으면 장착",
                     u8"도구 메뉴 중앙: 맨손 / 마우스 왼쪽 버튼: 도구 사용",
                     u8"M 지도 / 휠 또는 +/- 확대·축소 / 드래그 이동 / C 중심 복귀",
@@ -491,6 +509,7 @@ class StationScene
 public:
     StationScene() : mission(layout)
     {
+        cabinets.Furnish(layout);
         layout.Finish();
         lastTime = glutGet(GLUT_ELAPSED_TIME);
         glEnable(GL_DEPTH_TEST);
@@ -521,7 +540,57 @@ public:
         {
             key += 32;
         }
+        bool wasDown = keys[key];
         keys[key] = down;
+        if (cabinets.IsInside() && (key == 9 || key == 'm' || key == 'j' || key == 'h' || key == 'v'))
+        {
+            return;
+        }
+        if (key == 'e' && down && !wasDown && captured && !map && !journal && !help && !tools.IsOpen() &&
+            !mission.Won() && health > 0)
+        {
+            if (cabinets.IsInside())
+            {
+                keys[key] = false;
+                if (!cabinets.InTransition())
+                {
+                    bool clear = false;
+                    for (float side : {0.f, -.45f, .45f})
+                    {
+                        Station::Point exit = cabinets.ExitCandidate(side);
+                        if (layout.CanStand(exit) && !mission.Blocks(layout, exit))
+                        {
+                            cabinets.Leave(exit);
+                            clear = true;
+                            break;
+                        }
+                    }
+                    if (!clear)
+                    {
+                        Station::Point exit = cabinets.PreviousPosition();
+                        if (layout.CanStand(exit) && !mission.Blocks(layout, exit))
+                        {
+                            cabinets.Leave(exit);
+                        }
+                        else
+                        {
+                            exitBlockedTime = 3;
+                        }
+                    }
+                }
+                return;
+            }
+            int target = cabinets.Focus(layout, player, yaw, pitch);
+            if (target >= 0)
+            {
+                tools.Cancel();
+                cabinets.Enter(target, player, yaw, pitch);
+                glutWarpPointer(width / 2, height / 2);
+                cabinetFocus = -1;
+                keys[key] = false;
+                return;
+            }
+        }
         if (key == 9)
         {
             if (down && !map && !journal && !help && captured && !mission.Won())
@@ -643,7 +712,7 @@ public:
             }
             return;
         }
-        if (!captured || journal || help || mission.Won())
+        if (!captured || journal || help || mission.Won() || cabinets.InTransition())
         {
             return;
         }
@@ -654,6 +723,11 @@ public:
         }
         yaw += dx * .12f;
         pitch = Station::Clamp(pitch + dy * .12f, -80, 80);
+        if (cabinets.IsInside())
+        {
+            yaw = Station::Clamp(yaw, cabinets.Facing() - 18, cabinets.Facing() + 18);
+            pitch = Station::Clamp(pitch, -8, 8);
+        }
         glutWarpPointer(width / 2, height / 2);
     }
 
@@ -675,7 +749,8 @@ public:
         }
         if (button == GLUT_LEFT_BUTTON)
         {
-            tools.Button(state == GLUT_DOWN, captured && !journal && !help && !mission.Won() && health > 0);
+            tools.Button(state == GLUT_DOWN, captured && !journal && !help && !mission.Won() && health > 0 &&
+                                                 !cabinets.IsInside());
         }
     }
 
@@ -696,12 +771,16 @@ public:
             Cursor();
         }
         bool active = focused && captured && !map && !journal && !help && !tools.IsOpen() && !mission.Won() &&
-                      health > 0;
+                      health > 0 && !cabinets.IsInside();
+        exitBlockedTime = (std::max)(0.f, exitBlockedTime - dt);
+        cabinets.Update(focused ? dt : 0, player);
+        cabinetFocus = active ? cabinets.Focus(layout, player, yaw, pitch) : -1;
         tools.Update(dt, health, active);
-        material.flashlight = tools.LightOn();
+        material.flashlight = tools.LightOn() && !cabinets.IsInside();
         heartbeat = std::fmod(heartbeat + dt * (1 + 2 * (1 - health / 100)), 1000.f);
-        mission.Update(layout, dt, player, yaw, pitch, keys['e'] && active, tools.RepairHeld() && active,
-                       active);
+        bool missionActive = active && cabinetFocus < 0;
+        mission.Update(layout, dt, player, yaw, pitch, keys['e'] && missionActive,
+                       tools.RepairHeld() && missionActive, missionActive);
         float moved = 0;
         bool run = false;
         if (exhausted && stamina >= 20)
@@ -741,16 +820,19 @@ public:
         glEnable(GL_DEPTH_TEST);
         glClearColor(.006f, .012f, .018f, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        Sky();
+        Station::Point camera = player;
+        float cameraY = 1.65f, cameraYaw = yaw, cameraPitch = pitch;
+        cabinets.Camera(camera, cameraY, cameraYaw, cameraPitch);
+        Sky(cameraYaw, cameraPitch);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         double aspect = double(width) / height;
         glFrustum(-.07 * aspect, .07 * aspect, -.07, .07, .1, 240);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        glRotatef(pitch, 1, 0, 0);
-        glRotatef(yaw, 0, 1, 0);
-        glTranslatef(-player.x, -1.65f, -player.z);
+        glRotatef(cameraPitch, 1, 0, 0);
+        glRotatef(cameraYaw, 0, 1, 0);
+        glTranslatef(-camera.x, -cameraY, -camera.z);
         std::vector<Station::Lamp> lights = layout.lamps;
         std::sort(lights.begin(), lights.end(),
                   [&](const Station::Lamp& a, const Station::Lamp& b)
@@ -773,6 +855,7 @@ public:
         }
         layout.Draw(hdr, material);
         mission.Draw(hdr, material, layout);
+        cabinets.Draw(hdr, material);
         layout.DrawGlass();
         mission.DrawDoorGlass(layout);
         mission.DrawSteam();
@@ -780,7 +863,10 @@ public:
         {
             post.Apply();
         }
-        tools.DrawHeld(width, height);
+        if (!cabinets.IsInside())
+        {
+            tools.DrawHeld(width, height);
+        }
         Hud();
         tools.DrawMenu(width, height);
         glEnable(GL_DEPTH_TEST);
