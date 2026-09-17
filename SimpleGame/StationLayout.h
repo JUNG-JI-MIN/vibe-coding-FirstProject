@@ -101,6 +101,36 @@ namespace Station
         float angle, width;
         int access;
         const char* name;
+        bool automatic = false;
+
+        Point Local(Point world) const
+        {
+            float dx = world.x - p.x, dz = world.z - p.z;
+            float c = std::cos(angle), s = std::sin(angle);
+            return {dx * c + dz * s, -dx * s + dz * c};
+        }
+
+        float PanelCenter(int side, float amount) const
+        {
+            return side * (width * .25f + amount * width * .55f);
+        }
+
+        bool Blocks(Point world, float radius, float amount) const
+        {
+            Point local = Local(world);
+            if (std::fabs(local.x) >= .125f + radius)
+            {
+                return false;
+            }
+            for (int side : {-1, 1})
+            {
+                if (std::fabs(local.z - PanelCenter(side, amount)) < width * .25f + radius)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     };
 
     struct Batch
@@ -525,14 +555,45 @@ namespace Station
             {
                 passages.push_back({{100, 100}, Polar(66, i * Pi / 4), 2});
             }
-            doors.push_back({{29, 66}, 0, 4, 0, u8"압력 격벽"});
+            doors.push_back({{29, 66}, 0, 4, 0, u8"압력 격벽", true});
             for (int i = 0; i < 8; ++i)
             {
-                doors.push_back({Polar(13, i * Pi / 4), i * Pi / 4, 4, 1, u8"관제실 출입문"});
+                doors.push_back({Polar(13, i * Pi / 4), i * Pi / 4, 4, 1, u8"관제실 출입문", true});
             }
-            doors.push_back({{100, 27}, Pi / 2, 4, 2, u8"연구실 출입문"});
+            doors.push_back({{100, 27}, Pi / 2, 4, 2, u8"연구실 출입문", true});
             // Damaged outer-ring sector can always be bypassed through the inner ring.
             doors.push_back({Polar(66, -Pi / 12), -Pi / 12 + Pi / 2, 8, 3, u8"파손된 격벽"});
+            for (int i = 0; i < int(branches.size()); ++i)
+            {
+                if (i == 0 || i == 4)
+                {
+                    continue; // These entrances already have progression-controlled doors.
+                }
+                const auto& path = branches[i];
+                const auto& room = rooms[i < 4 ? i : i + 1];
+                float outside = 0, inside = 1;
+                // Find the chamfered room boundary, then place the door in the narrow connector.
+                for (int step = 0; step < 20; ++step)
+                {
+                    float t = (outside + inside) * .5f;
+                    Point p = {path.a.x + (path.b.x - path.a.x) * t, path.a.z + (path.b.z - path.a.z) * t};
+                    float dx = std::fabs(p.x - (room.x0 + room.x1) * .5f);
+                    float dz = std::fabs(p.z - (room.z0 + room.z1) * .5f);
+                    float hx = (room.x1 - room.x0) * .5f, hz = (room.z1 - room.z0) * .5f;
+                    if (dx <= hx && dz <= hz && dx + dz <= hx + hz - 2)
+                    {
+                        inside = t;
+                    }
+                    else
+                    {
+                        outside = t;
+                    }
+                }
+                float t = Clamp(inside - 2.5f / Distance(path.a, path.b), 0, 1);
+                Point center = {path.a.x + (path.b.x - path.a.x) * t, path.a.z + (path.b.z - path.a.z) * t};
+                doors.push_back({center, std::atan2(path.b.z - path.a.z, path.b.x - path.a.x),
+                                 path.halfWidth * 2, 4, u8"유리 자동문", true});
+            }
             BuildVents();
             for (int z = 0; z < 200; ++z)
             {

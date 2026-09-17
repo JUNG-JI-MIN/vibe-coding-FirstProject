@@ -23,6 +23,7 @@ namespace Station
         std::array<bool, 22> done = {};
         std::array<float, 22> progress = {};
         std::vector<float> doorSlide;
+        std::vector<float> doorHold;
         bool previousE = false;
         int focus = -1;
         float messageTime = 0, damperTime = 0, elapsed = 0;
@@ -119,6 +120,55 @@ namespace Station
             glScalef(w, h, d);
             glutSolidCube(1);
             glPopMatrix();
+        }
+
+        bool DoorReleased(const Door& door) const
+        {
+            switch (door.access)
+            {
+            case 0:
+                return done[2];
+            case 1:
+                return done[5] && done[8];
+            case 2:
+                return done[9];
+            case 4:
+                return true;
+            default:
+                return false;
+            }
+        }
+
+        void DrawAutomaticFrame(const Door& door, int index, bool hdr, MetalMaterial& material)
+        {
+            glColor3f(.23f, .29f, .32f);
+            Cube(0, 3.96f, 0, .3f, 1.08f, door.width + .3f);
+            Cube(0, 3.3f, 0, .42f, .24f, door.width + .4f);
+            for (int side : {-1, 1})
+            {
+                Cube(0, 1.6f, side * (door.width * .5f + .07f), .3f, 3.2f, .14f);
+                float center = door.PanelCenter(side, doorSlide[index]);
+                float half = door.width * .25f;
+                // Opaque moving borders surround the panes rendered in the transparent pass.
+                glColor3f(.42f, .49f, .51f);
+                Cube(0, .09f, center, .13f, .18f, half * 2);
+                Cube(0, 3.11f, center, .13f, .18f, half * 2);
+                Cube(0, 1.6f, center - half + .035f, .13f, 3.2f, .07f);
+                Cube(0, 1.6f, center + half - .035f, .13f, 3.2f, .07f);
+            }
+            if (hdr)
+            {
+                material.Use(.1f, .4f, 2, true);
+            }
+            bool unlocked = DoorReleased(door);
+            glColor3f(unlocked ? .12f : .85f, unlocked ? .7f : .12f, unlocked ? .65f : .08f);
+            // Sensor/status lights are visible when approaching from either side.
+            Cube(.23f, 3.3f, 0, .04f, .08f, .55f);
+            Cube(-.23f, 3.3f, 0, .04f, .08f, .55f);
+            if (hdr)
+            {
+                material.Use(.65f, .45f, 0, true);
+            }
         }
 
     public:
@@ -258,6 +308,7 @@ namespace Station
                       8,
                       false}};
             doorSlide.assign(layout.doors.size(), 0);
+            doorHold.assign(layout.doors.size(), 0);
             for (int i = 0; i < int(tasks.size()); ++i)
             {
                 if (i == 18)
@@ -333,6 +384,10 @@ namespace Station
             {
                 slide = 0;
             }
+            for (auto& hold : doorHold)
+            {
+                hold = 0;
+            }
             previousE = false;
             focus = -1;
             damperTime = 0;
@@ -405,14 +460,8 @@ namespace Station
         {
             for (int i = 0; i < int(layout.doors.size()); ++i)
             {
-                if (doorSlide[i] > .94f)
-                {
-                    continue;
-                }
                 const auto& d = layout.doors[i];
-                float dx = p.x - d.p.x, dz = p.z - d.p.z, c = std::cos(d.angle), s = std::sin(d.angle);
-                if (std::fabs(dx * c + dz * s) < .18f + radius &&
-                    std::fabs(-dx * s + dz * c) < d.width * .5f + radius)
+                if (d.Blocks(p, radius, doorSlide[i]))
                 {
                     return true;
                 }
@@ -446,11 +495,32 @@ namespace Station
             damperTime = (std::max)(0.f, damperTime - dt);
             for (int i = 0; i < int(layout.doors.size()); ++i)
             {
-                int access = layout.doors[i].access;
-                bool released = access == 0
-                                    ? done[2]
-                                    : (access == 1 ? (done[5] && done[8]) : (access == 2 ? done[9] : false));
-                doorSlide[i] = Clamp(doorSlide[i] + (released ? dt : -dt), 0, 1);
+                const auto& door = layout.doors[i];
+                bool released = DoorReleased(door);
+                if (!door.automatic)
+                {
+                    doorSlide[i] = Clamp(doorSlide[i] + (released ? dt : -dt), 0, 1);
+                    continue;
+                }
+                Point local = door.Local(player);
+                bool nearby = std::fabs(local.x) < 5 && std::fabs(local.z) < door.width * .5f + .6f;
+                if (released && nearby)
+                {
+                    doorHold[i] = 1.25f;
+                }
+                else
+                {
+                    doorHold[i] = (std::max)(0.f, doorHold[i] - dt);
+                }
+                bool opening = released && doorHold[i] > 0;
+                float next = Clamp(doorSlide[i] + (opening ? 2.f : -1.2f) * dt, 0, 1);
+                // A closing panel must never sweep through a player in the doorway.
+                if (next < doorSlide[i] && door.Blocks(player, .48f, next))
+                {
+                    doorHold[i] = 1.25f;
+                    next = Clamp(doorSlide[i] + 2.f * dt, 0, 1);
+                }
+                doorSlide[i] = next;
             }
             focus = -1;
             float nearest = 2.6f;
@@ -557,12 +627,17 @@ namespace Station
                 glPushMatrix();
                 glTranslatef(door.p.x, 0, door.p.z);
                 glRotatef(-door.angle * 180 / Pi, 0, 1, 0);
+                if (door.automatic)
+                {
+                    DrawAutomaticFrame(door, i, hdr, material);
+                    glPopMatrix();
+                    continue;
+                }
                 glColor3f(.32f, .36f, .38f);
                 // Local X is the corridor axis; panels slide along local Z into side pockets.
                 for (int side : {-1, 1})
                 {
-                    Cube(0, 1.6f, side * (door.width * .25f + doorSlide[i] * door.width * .55f), .25f, 3.2f,
-                         door.width * .5f);
+                    Cube(0, 1.6f, door.PanelCenter(side, doorSlide[i]), .25f, 3.2f, door.width * .5f);
                 }
                 glColor3f(.6f, .4f, .12f);
                 Cube(0, 3.35f, 0, .4f, .25f, door.width + .3f);
@@ -649,6 +724,78 @@ namespace Station
                 Cube(100, 4.4f, 15, 1.4f, .08f, 1.4f);
             }
             glUseProgram(0);
+        }
+
+        void DrawDoorGlass(const Layout& layout)
+        {
+            struct Pane
+            {
+                int door, side;
+                float depth;
+            };
+
+            float view[16];
+            glGetFloatv(GL_MODELVIEW_MATRIX, view);
+            std::vector<Pane> panes;
+            panes.reserve(layout.doors.size() * 2);
+            for (int i = 0; i < int(layout.doors.size()); ++i)
+            {
+                const auto& door = layout.doors[i];
+                if (!door.automatic)
+                {
+                    continue;
+                }
+                for (int side : {-1, 1})
+                {
+                    float center = door.PanelCenter(side, doorSlide[i]);
+                    float x = door.p.x - std::sin(door.angle) * center;
+                    float z = door.p.z + std::cos(door.angle) * center;
+                    panes.push_back({i, side, view[2] * x + view[6] * 1.6f + view[10] * z});
+                }
+            }
+            std::sort(panes.begin(), panes.end(),
+                      [](const Pane& a, const Pane& b)
+                      {
+                          return a.depth < b.depth;
+                      });
+            glUseProgram(0);
+            glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_CURRENT_BIT);
+            glDisable(GL_LIGHTING);
+            glDisable(GL_FOG);
+            glDisable(GL_CULL_FACE);
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDepthMask(GL_FALSE);
+            for (const auto& pane : panes)
+            {
+                const auto& door = layout.doors[pane.door];
+                float center = door.PanelCenter(pane.side, doorSlide[pane.door]);
+                float half = door.width * .25f - .07f;
+                glPushMatrix();
+                glTranslatef(door.p.x, 0, door.p.z);
+                glRotatef(-door.angle * 180 / Pi, 0, 1, 0);
+                glColor4f(.22f, .49f, .55f, .22f);
+                glBegin(GL_QUADS);
+                glVertex3f(0, .18f, center - half);
+                glVertex3f(0, .18f, center + half);
+                glVertex3f(0, 3.02f, center + half);
+                glVertex3f(0, 3.02f, center - half);
+                glEnd();
+                // Frosted safety stripes make a closed pane readable in the dark.
+                glColor4f(.58f, .76f, .79f, .48f);
+                glBegin(GL_QUADS);
+                for (float height : {1.36f, 1.52f})
+                {
+                    glVertex3f(0, height, center - half);
+                    glVertex3f(0, height, center + half);
+                    glVertex3f(0, height + .055f, center + half);
+                    glVertex3f(0, height + .055f, center - half);
+                }
+                glEnd();
+                glPopMatrix();
+            }
+            glPopAttrib();
         }
 
         void DrawSteam()

@@ -774,6 +774,7 @@ public:
         layout.Draw(hdr, material);
         mission.Draw(hdr, material, layout);
         layout.DrawGlass();
+        mission.DrawDoorGlass(layout);
         mission.DrawSteam();
         if (hdr)
         {
