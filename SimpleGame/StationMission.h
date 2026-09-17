@@ -30,7 +30,7 @@ namespace Station
 
         struct Steam
         {
-            float x, y, z, age, life, vx, vz;
+            float x, y, z, age, life, vx, vy, vz;
         };
 
         std::vector<Steam> steam;
@@ -266,6 +266,14 @@ namespace Station
                 }
                 const auto& t = tasks[i];
                 layout.AddBox(t.p.x, .48f, t.p.z, .7f, .96f, .7f, 3, true);
+                if (i == 1 || i == 2)
+                {
+                    // Connect the horizontal handwheel's valve body to the existing pipe riser.
+                    float riserZ = i == 1 ? 58.f : LifeSupportLeak.z;
+                    layout.AddBox((t.p.x + 24) * .5f, 1.04f, t.p.z, 24 - t.p.x + .16f, .12f, .12f, 4, true);
+                    layout.AddBox(24, 1.04f, (t.p.z + riserZ) * .5f, .12f, .12f,
+                                  std::fabs(t.p.z - riserZ) + .16f, 4, true);
+                }
             }
             message = u8"생명유지실에서 깨어났습니다. 압력계를 확인하세요. Tab으로 도구를 장착하고 마우스 "
                       u8"왼쪽 버튼으로 사용합니다.";
@@ -510,8 +518,10 @@ namespace Station
                     emissionClock -= 1;
                     if (steam.size() < 180)
                     {
-                        steam.push_back(
-                            {23, 1.6f, 69, 0, 1.3f + Random(), (Random() - .5f) * .5f, .6f + Random()});
+                        // Emit from the underside of the upper pipe, toward the open room below it.
+                        steam.push_back({LifeSupportLeak.x, LifeSupportPipeHeight - LifeSupportPipeHalfSize,
+                                         LifeSupportLeak.z, 0, 1.3f + Random(), -.4f + Random() * .3f,
+                                         -1.3f + Random() * .4f, -.8f - Random() * .5f});
                     }
                 }
             }
@@ -520,7 +530,8 @@ namespace Station
                 p.age += dt;
                 p.x += p.vx * dt;
                 p.z += p.vz * dt;
-                p.y += dt * .4f;
+                p.y += p.vy * dt;
+                p.vy += dt * .4f;
             }
             steam.erase(std::remove_if(steam.begin(), steam.end(),
                                        [](const Steam& p)
@@ -597,9 +608,14 @@ namespace Station
                     {
                         material.Use(.65f, .4f, 0, true);
                     }
+                    glColor3f(.32f, .36f, .34f);
+                    Cube(task.p.x, 1.04f, task.p.z, .18f, .16f, .18f);
+                    Cube(task.p.x, 1.15f, task.p.z, .07f, .16f, .07f);
                     glColor3f(.55f, .14f, .09f);
                     glPushMatrix();
                     glTranslatef(task.p.x, 1.22f, task.p.z);
+                    // Torus lies in local XY; rotate it onto XZ with its spindle pointing upward.
+                    glRotatef(-90, 1, 0, 0);
                     glRotatef(progress[i] * 180, 0, 0, 1);
                     glutSolidTorus(.035, .23, 8, 20);
                     Cube(0, 0, 0, .44f, .045f, .05f);

@@ -19,6 +19,10 @@ namespace Station
         float x, z;
     };
 
+    constexpr float LifeSupportPipeHeight = 3.35f;
+    constexpr float LifeSupportPipeHalfSize = .065f;
+    constexpr Point LifeSupportLeak = {23, 73};
+
     inline float Distance(Point a, Point b)
     {
         float x = a.x - b.x, z = a.z - b.z;
@@ -284,9 +288,10 @@ namespace Station
                     AddBox(x, .01f, z + 1.3f, 2.2f, .02f, .7f, 10, false);
                 }
             }
-            for (float z : {55.f, 58.f, 73.f})
+            for (float z : {55.f, 58.f, LifeSupportLeak.z})
             {
-                AddBox(22, 3.35f, z, 7, .13f, .13f, 4, false);
+                AddBox(22, LifeSupportPipeHeight, z, 7, LifeSupportPipeHalfSize * 2,
+                       LifeSupportPipeHalfSize * 2, 4, false);
                 AddBox(24, 1.65f, z, .16f, 3.3f, .16f, 4, true);
             }
             // Generator: machinery islands, cable trays and warning stripes.
