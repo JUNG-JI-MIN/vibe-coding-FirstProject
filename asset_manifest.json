@@ -1,0 +1,5186 @@
+{
+  "Floor_Power": {
+    "faces": 34,
+    "materials": [
+      "BO_Power.002"
+    ],
+    "min": [
+      -96.0,
+      -0.2,
+      4.0
+    ],
+    "max": [
+      -77.0,
+      0.0,
+      38.0
+    ]
+  },
+  "Floor_LifeSupport": {
+    "faces": 26,
+    "materials": [
+      "BO_LifeSupport.002"
+    ],
+    "min": [
+      -96.0,
+      -0.2,
+      -36.0
+    ],
+    "max": [
+      -78.0,
+      0.0,
+      -7.0
+    ]
+  },
+  "Floor_Connections": {
+    "faces": 666,
+    "materials": [
+      "BO_Connections.002"
+    ],
+    "min": [
+      -89.0,
+      -0.2,
+      -67.175
+    ],
+    "max": [
+      69.153,
+      0.0,
+      52.0
+    ]
+  },
+  "Floor_OuterRing": {
+    "faces": 3593,
+    "materials": [
+      "BO_OuterRing.002"
+    ],
+    "min": [
+      -75.0,
+      -0.2,
+      -72.261
+    ],
+    "max": [
+      75.0,
+      0.0,
+      71.379
+    ]
+  },
+  "Floor_Spokes": {
+    "faces": 3022,
+    "materials": [
+      "BO_Spokes.002"
+    ],
+    "min": [
+      -71.0,
+      -0.2,
+      -56.0
+    ],
+    "max": [
+      71.0,
+      0.0,
+      56.0
+    ]
+  },
+  "Floor_InnerRing": {
+    "faces": 4522,
+    "materials": [
+      "BO_InnerRing.002"
+    ],
+    "min": [
+      -43.0,
+      -0.2,
+      -43.0
+    ],
+    "max": [
+      43.0,
+      0.0,
+      43.0
+    ]
+  },
+  "Floor_Warehouse": {
+    "faces": 701,
+    "materials": [
+      "BO_Warehouse.002"
+    ],
+    "min": [
+      -40.0,
+      -0.2,
+      52.0
+    ],
+    "max": [
+      -18.0,
+      0.0,
+      76.0
+    ]
+  },
+  "Floor_Docking": {
+    "faces": 896,
+    "materials": [
+      "BO_Docking.002"
+    ],
+    "min": [
+      -22.0,
+      -0.2,
+      56.0
+    ],
+    "max": [
+      25.0,
+      0.0,
+      96.0
+    ]
+  },
+  "Floor_Research": {
+    "faces": 810,
+    "materials": [
+      "BO_Research.002"
+    ],
+    "min": [
+      -20.0,
+      -0.2,
+      -82.0
+    ],
+    "max": [
+      20.0,
+      0.0,
+      -56.0
+    ]
+  },
+  "Floor_Control": {
+    "faces": 408,
+    "materials": [
+      "BO_Control.002"
+    ],
+    "min": [
+      -12.0,
+      -0.2,
+      -12.0
+    ],
+    "max": [
+      12.0,
+      0.0,
+      12.0
+    ]
+  },
+  "Floor_Habitation": {
+    "faces": 145,
+    "materials": [
+      "BO_Habitation.002"
+    ],
+    "min": [
+      46.0,
+      -0.2,
+      7.0
+    ],
+    "max": [
+      64.0,
+      0.0,
+      31.0
+    ]
+  },
+  "Floor_Medical": {
+    "faces": 126,
+    "materials": [
+      "BO_Medical.002"
+    ],
+    "min": [
+      46.0,
+      -0.2,
+      -28.0
+    ],
+    "max": [
+      63.0,
+      0.0,
+      -7.0
+    ]
+  },
+  "Floor_Escape": {
+    "faces": 194,
+    "materials": [
+      "BO_Escape.002"
+    ],
+    "min": [
+      59.397,
+      -0.2,
+      -87.681
+    ],
+    "max": [
+      87.681,
+      0.0,
+      -59.397
+    ]
+  },
+  "Walls_Continuous_Perimeter": {
+    "faces": 2284,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      -96.2,
+      0.0,
+      -87.964
+    ],
+    "max": [
+      87.964,
+      3.5,
+      96.2
+    ]
+  },
+  "Hab_NorthPartition_46": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      46.0,
+      0.0,
+      14.9
+    ],
+    "max": [
+      49.3,
+      3.5,
+      15.1
+    ]
+  },
+  "Hab_NorthPartition_Lintel50.5": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      49.3,
+      2.6,
+      14.9
+    ],
+    "max": [
+      51.7,
+      3.5,
+      15.1
+    ]
+  },
+  "Hab_NorthPartition_51.7": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      51.7,
+      0.0,
+      14.9
+    ],
+    "max": [
+      58.3,
+      3.5,
+      15.1
+    ]
+  },
+  "Hab_NorthPartition_Lintel59.5": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      58.3,
+      2.6,
+      14.9
+    ],
+    "max": [
+      60.7,
+      3.5,
+      15.1
+    ]
+  },
+  "Hab_NorthPartition_End": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      60.7,
+      0.0,
+      14.9
+    ],
+    "max": [
+      64.0,
+      3.5,
+      15.1
+    ]
+  },
+  "Hab_SouthPartition_46": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      46.0,
+      0.0,
+      20.9
+    ],
+    "max": [
+      49.3,
+      3.5,
+      21.1
+    ]
+  },
+  "Hab_SouthPartition_Lintel50.5": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      49.3,
+      2.6,
+      20.9
+    ],
+    "max": [
+      51.7,
+      3.5,
+      21.1
+    ]
+  },
+  "Hab_SouthPartition_51.7": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      51.7,
+      0.0,
+      20.9
+    ],
+    "max": [
+      58.3,
+      3.5,
+      21.1
+    ]
+  },
+  "Hab_SouthPartition_Lintel59.5": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      58.3,
+      2.6,
+      20.9
+    ],
+    "max": [
+      60.7,
+      3.5,
+      21.1
+    ]
+  },
+  "Hab_SouthPartition_End": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      60.7,
+      0.0,
+      20.9
+    ],
+    "max": [
+      64.0,
+      3.5,
+      21.1
+    ]
+  },
+  "Hab_BayDivider-15": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      54.9,
+      0.0,
+      7.0
+    ],
+    "max": [
+      55.1,
+      3.5,
+      15.0
+    ]
+  },
+  "Hab_BayDivider-31": {
+    "faces": 6,
+    "materials": [
+      "BO_Wall.002"
+    ],
+    "min": [
+      54.9,
+      0.0,
+      21.0
+    ],
+    "max": [
+      55.1,
+      3.5,
+      31.0
+    ]
+  },
+  "Ceiling_With_Monster_Openings": {
+    "faces": 16553,
+    "materials": [
+      "BO_Ceiling.002"
+    ],
+    "min": [
+      -96.0,
+      3.5,
+      -87.681
+    ],
+    "max": [
+      87.681,
+      3.7,
+      96.0
+    ]
+  },
+  "Door_Spoke0_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      13.375,
+      0.0,
+      1.4
+    ],
+    "max": [
+      13.625,
+      2.6,
+      2.0
+    ]
+  },
+  "Door_Spoke0_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      13.375,
+      0.0,
+      -2.0
+    ],
+    "max": [
+      13.625,
+      2.6,
+      -1.4
+    ]
+  },
+  "Door_Spoke0_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      13.375,
+      2.6,
+      -2.0
+    ],
+    "max": [
+      13.625,
+      3.5,
+      2.0
+    ]
+  },
+  "Door_Spoke0_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      0.0,
+      1.4
+    ],
+    "max": [
+      46.125,
+      2.6,
+      2.0
+    ]
+  },
+  "Door_Spoke0_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      0.0,
+      -2.0
+    ],
+    "max": [
+      46.125,
+      2.6,
+      -1.4
+    ]
+  },
+  "Door_Spoke0_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      2.6,
+      -2.0
+    ],
+    "max": [
+      46.125,
+      3.5,
+      2.0
+    ]
+  },
+  "Door_Spoke0_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      67.875,
+      0.0,
+      1.4
+    ],
+    "max": [
+      68.125,
+      2.6,
+      2.0
+    ]
+  },
+  "Door_Spoke0_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      67.875,
+      0.0,
+      -2.0
+    ],
+    "max": [
+      68.125,
+      2.6,
+      -1.4
+    ]
+  },
+  "Door_Spoke0_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      67.875,
+      2.6,
+      -2.0
+    ],
+    "max": [
+      68.125,
+      3.5,
+      2.0
+    ]
+  },
+  "Door_Spoke1_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      10.448,
+      0.0,
+      -8.644
+    ],
+    "max": [
+      11.049,
+      2.6,
+      -8.043
+    ]
+  },
+  "Door_Spoke1_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      8.043,
+      0.0,
+      -11.049
+    ],
+    "max": [
+      8.644,
+      2.6,
+      -10.448
+    ]
+  },
+  "Door_Spoke1_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      8.043,
+      2.6,
+      -11.049
+    ],
+    "max": [
+      11.049,
+      3.5,
+      -8.043
+    ]
+  },
+  "Door_Spoke1_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      33.428,
+      0.0,
+      -31.625
+    ],
+    "max": [
+      34.03,
+      2.6,
+      -31.024
+    ]
+  },
+  "Door_Spoke1_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      31.024,
+      0.0,
+      -34.03
+    ],
+    "max": [
+      31.625,
+      2.6,
+      -33.428
+    ]
+  },
+  "Door_Spoke1_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      31.024,
+      2.6,
+      -34.03
+    ],
+    "max": [
+      34.03,
+      3.5,
+      -31.024
+    ]
+  },
+  "Door_Spoke1_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      48.985,
+      0.0,
+      -47.182
+    ],
+    "max": [
+      49.586,
+      2.6,
+      -46.581
+    ]
+  },
+  "Door_Spoke1_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      46.581,
+      0.0,
+      -49.586
+    ],
+    "max": [
+      47.182,
+      2.6,
+      -48.985
+    ]
+  },
+  "Door_Spoke1_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      46.581,
+      2.6,
+      -49.586
+    ],
+    "max": [
+      49.586,
+      3.5,
+      -46.581
+    ]
+  },
+  "Door_Spoke2_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      -13.625
+    ],
+    "max": [
+      2.0,
+      2.6,
+      -13.375
+    ]
+  },
+  "Door_Spoke2_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      -13.625
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      -13.375
+    ]
+  },
+  "Door_Spoke2_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      -13.625
+    ],
+    "max": [
+      2.0,
+      3.5,
+      -13.375
+    ]
+  },
+  "Door_Spoke2_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      -46.125
+    ],
+    "max": [
+      2.0,
+      2.6,
+      -45.875
+    ]
+  },
+  "Door_Spoke2_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      -46.125
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      -45.875
+    ]
+  },
+  "Door_Spoke2_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      -46.125
+    ],
+    "max": [
+      2.0,
+      3.5,
+      -45.875
+    ]
+  },
+  "Door_Spoke2_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      -68.125
+    ],
+    "max": [
+      2.0,
+      2.6,
+      -67.875
+    ]
+  },
+  "Door_Spoke2_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      -68.125
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      -67.875
+    ]
+  },
+  "Door_Spoke2_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      -68.125
+    ],
+    "max": [
+      2.0,
+      3.5,
+      -67.875
+    ]
+  },
+  "Door_Spoke3_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -8.644,
+      0.0,
+      -11.049
+    ],
+    "max": [
+      -8.043,
+      2.6,
+      -10.448
+    ]
+  },
+  "Door_Spoke3_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -11.049,
+      0.0,
+      -8.644
+    ],
+    "max": [
+      -10.448,
+      2.6,
+      -8.043
+    ]
+  },
+  "Door_Spoke3_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -11.049,
+      2.6,
+      -11.049
+    ],
+    "max": [
+      -8.043,
+      3.5,
+      -8.043
+    ]
+  },
+  "Door_Spoke3_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -31.625,
+      0.0,
+      -34.03
+    ],
+    "max": [
+      -31.024,
+      2.6,
+      -33.428
+    ]
+  },
+  "Door_Spoke3_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -34.03,
+      0.0,
+      -31.625
+    ],
+    "max": [
+      -33.428,
+      2.6,
+      -31.024
+    ]
+  },
+  "Door_Spoke3_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -34.03,
+      2.6,
+      -34.03
+    ],
+    "max": [
+      -31.024,
+      3.5,
+      -31.024
+    ]
+  },
+  "Door_Spoke3_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -47.182,
+      0.0,
+      -49.586
+    ],
+    "max": [
+      -46.581,
+      2.6,
+      -48.985
+    ]
+  },
+  "Door_Spoke3_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -49.586,
+      0.0,
+      -47.182
+    ],
+    "max": [
+      -48.985,
+      2.6,
+      -46.581
+    ]
+  },
+  "Door_Spoke3_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -49.586,
+      2.6,
+      -49.586
+    ],
+    "max": [
+      -46.581,
+      3.5,
+      -46.581
+    ]
+  },
+  "Door_Spoke4_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -13.625,
+      0.0,
+      -2.0
+    ],
+    "max": [
+      -13.375,
+      2.6,
+      -1.4
+    ]
+  },
+  "Door_Spoke4_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -13.625,
+      0.0,
+      1.4
+    ],
+    "max": [
+      -13.375,
+      2.6,
+      2.0
+    ]
+  },
+  "Door_Spoke4_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -13.625,
+      2.6,
+      -2.0
+    ],
+    "max": [
+      -13.375,
+      3.5,
+      2.0
+    ]
+  },
+  "Door_Spoke4_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -46.125,
+      0.0,
+      -2.0
+    ],
+    "max": [
+      -45.875,
+      2.6,
+      -1.4
+    ]
+  },
+  "Door_Spoke4_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -46.125,
+      0.0,
+      1.4
+    ],
+    "max": [
+      -45.875,
+      2.6,
+      2.0
+    ]
+  },
+  "Door_Spoke4_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -46.125,
+      2.6,
+      -2.0
+    ],
+    "max": [
+      -45.875,
+      3.5,
+      2.0
+    ]
+  },
+  "Door_Spoke4_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -68.125,
+      0.0,
+      -2.0
+    ],
+    "max": [
+      -67.875,
+      2.6,
+      -1.4
+    ]
+  },
+  "Door_Spoke4_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -68.125,
+      0.0,
+      1.4
+    ],
+    "max": [
+      -67.875,
+      2.6,
+      2.0
+    ]
+  },
+  "Door_Spoke4_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -68.125,
+      2.6,
+      -2.0
+    ],
+    "max": [
+      -67.875,
+      3.5,
+      2.0
+    ]
+  },
+  "Door_Spoke5_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -11.049,
+      0.0,
+      8.043
+    ],
+    "max": [
+      -10.448,
+      2.6,
+      8.644
+    ]
+  },
+  "Door_Spoke5_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -8.644,
+      0.0,
+      10.448
+    ],
+    "max": [
+      -8.043,
+      2.6,
+      11.049
+    ]
+  },
+  "Door_Spoke5_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -11.049,
+      2.6,
+      8.043
+    ],
+    "max": [
+      -8.043,
+      3.5,
+      11.049
+    ]
+  },
+  "Door_Spoke5_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -34.03,
+      0.0,
+      31.024
+    ],
+    "max": [
+      -33.428,
+      2.6,
+      31.625
+    ]
+  },
+  "Door_Spoke5_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -31.625,
+      0.0,
+      33.428
+    ],
+    "max": [
+      -31.024,
+      2.6,
+      34.03
+    ]
+  },
+  "Door_Spoke5_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -34.03,
+      2.6,
+      31.024
+    ],
+    "max": [
+      -31.024,
+      3.5,
+      34.03
+    ]
+  },
+  "Door_Spoke5_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -49.586,
+      0.0,
+      46.581
+    ],
+    "max": [
+      -48.985,
+      2.6,
+      47.182
+    ]
+  },
+  "Door_Spoke5_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -47.182,
+      0.0,
+      48.985
+    ],
+    "max": [
+      -46.581,
+      2.6,
+      49.586
+    ]
+  },
+  "Door_Spoke5_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -49.586,
+      2.6,
+      46.581
+    ],
+    "max": [
+      -46.581,
+      3.5,
+      49.586
+    ]
+  },
+  "Door_Spoke6_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      13.375
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      13.625
+    ]
+  },
+  "Door_Spoke6_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      13.375
+    ],
+    "max": [
+      2.0,
+      2.6,
+      13.625
+    ]
+  },
+  "Door_Spoke6_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      13.375
+    ],
+    "max": [
+      2.0,
+      3.5,
+      13.625
+    ]
+  },
+  "Door_Spoke6_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      45.875
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      46.125
+    ]
+  },
+  "Door_Spoke6_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      45.875
+    ],
+    "max": [
+      2.0,
+      2.6,
+      46.125
+    ]
+  },
+  "Door_Spoke6_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      45.875
+    ],
+    "max": [
+      2.0,
+      3.5,
+      46.125
+    ]
+  },
+  "Door_Spoke6_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      67.875
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      68.125
+    ]
+  },
+  "Door_Spoke6_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      67.875
+    ],
+    "max": [
+      2.0,
+      2.6,
+      68.125
+    ]
+  },
+  "Door_Spoke6_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      67.875
+    ],
+    "max": [
+      2.0,
+      3.5,
+      68.125
+    ]
+  },
+  "Door_Spoke7_13.5_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      8.043,
+      0.0,
+      10.448
+    ],
+    "max": [
+      8.644,
+      2.6,
+      11.049
+    ]
+  },
+  "Door_Spoke7_13.5_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      10.448,
+      0.0,
+      8.043
+    ],
+    "max": [
+      11.049,
+      2.6,
+      8.644
+    ]
+  },
+  "Door_Spoke7_13.5_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      8.043,
+      2.6,
+      8.043
+    ],
+    "max": [
+      11.049,
+      3.5,
+      11.049
+    ]
+  },
+  "Door_Spoke7_46_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      31.024,
+      0.0,
+      33.428
+    ],
+    "max": [
+      31.625,
+      2.6,
+      34.03
+    ]
+  },
+  "Door_Spoke7_46_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      33.428,
+      0.0,
+      31.024
+    ],
+    "max": [
+      34.03,
+      2.6,
+      31.625
+    ]
+  },
+  "Door_Spoke7_46_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      31.024,
+      2.6,
+      31.024
+    ],
+    "max": [
+      34.03,
+      3.5,
+      34.03
+    ]
+  },
+  "Door_Spoke7_68_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      46.581,
+      0.0,
+      48.985
+    ],
+    "max": [
+      47.182,
+      2.6,
+      49.586
+    ]
+  },
+  "Door_Spoke7_68_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      48.985,
+      0.0,
+      46.581
+    ],
+    "max": [
+      49.586,
+      2.6,
+      47.182
+    ]
+  },
+  "Door_Spoke7_68_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      46.581,
+      2.6,
+      46.581
+    ],
+    "max": [
+      49.586,
+      3.5,
+      49.586
+    ]
+  },
+  "Door_LifeSupport_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -78.125,
+      0.0,
+      -23.6
+    ],
+    "max": [
+      -77.875,
+      2.6,
+      -23.0
+    ]
+  },
+  "Door_LifeSupport_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -78.125,
+      0.0,
+      -27.0
+    ],
+    "max": [
+      -77.875,
+      2.6,
+      -26.4
+    ]
+  },
+  "Door_LifeSupport_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -78.125,
+      2.6,
+      -27.0
+    ],
+    "max": [
+      -77.875,
+      3.5,
+      -23.0
+    ]
+  },
+  "Door_Power_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -77.125,
+      0.0,
+      24.4
+    ],
+    "max": [
+      -76.875,
+      2.6,
+      25.0
+    ]
+  },
+  "Door_Power_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -77.125,
+      0.0,
+      21.0
+    ],
+    "max": [
+      -76.875,
+      2.6,
+      21.6
+    ]
+  },
+  "Door_Power_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -77.125,
+      2.6,
+      21.0
+    ],
+    "max": [
+      -76.875,
+      3.5,
+      25.0
+    ]
+  },
+  "Door_MedicalWest_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      0.0,
+      -16.6
+    ],
+    "max": [
+      46.125,
+      2.6,
+      -16.0
+    ]
+  },
+  "Door_MedicalWest_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      0.0,
+      -20.0
+    ],
+    "max": [
+      46.125,
+      2.6,
+      -19.4
+    ]
+  },
+  "Door_MedicalWest_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      2.6,
+      -20.0
+    ],
+    "max": [
+      46.125,
+      3.5,
+      -16.0
+    ]
+  },
+  "Door_MedicalEast_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      62.875,
+      0.0,
+      -16.6
+    ],
+    "max": [
+      63.125,
+      2.6,
+      -16.0
+    ]
+  },
+  "Door_MedicalEast_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      62.875,
+      0.0,
+      -20.0
+    ],
+    "max": [
+      63.125,
+      2.6,
+      -19.4
+    ]
+  },
+  "Door_MedicalEast_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      62.875,
+      2.6,
+      -20.0
+    ],
+    "max": [
+      63.125,
+      3.5,
+      -16.0
+    ]
+  },
+  "Door_HabitationWest_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      0.0,
+      19.4
+    ],
+    "max": [
+      46.125,
+      2.6,
+      20.0
+    ]
+  },
+  "Door_HabitationWest_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      0.0,
+      16.0
+    ],
+    "max": [
+      46.125,
+      2.6,
+      16.6
+    ]
+  },
+  "Door_HabitationWest_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      45.875,
+      2.6,
+      16.0
+    ],
+    "max": [
+      46.125,
+      3.5,
+      20.0
+    ]
+  },
+  "Door_HabitationEast_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      63.875,
+      0.0,
+      19.4
+    ],
+    "max": [
+      64.125,
+      2.6,
+      20.0
+    ]
+  },
+  "Door_HabitationEast_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      63.875,
+      0.0,
+      16.0
+    ],
+    "max": [
+      64.125,
+      2.6,
+      16.6
+    ]
+  },
+  "Door_HabitationEast_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      63.875,
+      2.6,
+      16.0
+    ],
+    "max": [
+      64.125,
+      3.5,
+      20.0
+    ]
+  },
+  "Door_Warehouse_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -27.6,
+      0.0,
+      51.875
+    ],
+    "max": [
+      -27.0,
+      2.6,
+      52.125
+    ]
+  },
+  "Door_Warehouse_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -31.0,
+      0.0,
+      51.875
+    ],
+    "max": [
+      -30.4,
+      2.6,
+      52.125
+    ]
+  },
+  "Door_Warehouse_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -31.0,
+      2.6,
+      51.875
+    ],
+    "max": [
+      -27.0,
+      3.5,
+      52.125
+    ]
+  },
+  "Door_Research_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      -56.125
+    ],
+    "max": [
+      2.0,
+      2.6,
+      -55.875
+    ]
+  },
+  "Door_Research_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      -56.125
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      -55.875
+    ]
+  },
+  "Door_Research_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      -56.125
+    ],
+    "max": [
+      2.0,
+      3.5,
+      -55.875
+    ]
+  },
+  "Door_Docking_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      1.4,
+      0.0,
+      55.875
+    ],
+    "max": [
+      2.0,
+      2.6,
+      56.125
+    ]
+  },
+  "Door_Docking_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      0.0,
+      55.875
+    ],
+    "max": [
+      -1.4,
+      2.6,
+      56.125
+    ]
+  },
+  "Door_Docking_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -2.0,
+      2.6,
+      55.875
+    ],
+    "max": [
+      2.0,
+      3.5,
+      56.125
+    ]
+  },
+  "Door_Escape_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      66.662,
+      0.0,
+      -64.859
+    ],
+    "max": [
+      67.264,
+      2.6,
+      -64.258
+    ]
+  },
+  "Door_Escape_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      64.258,
+      0.0,
+      -67.264
+    ],
+    "max": [
+      64.859,
+      2.6,
+      -66.662
+    ]
+  },
+  "Door_Escape_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      64.258,
+      2.6,
+      -67.264
+    ],
+    "max": [
+      67.264,
+      3.5,
+      -64.258
+    ]
+  },
+  "Door_LifePower_JambL": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -85.6,
+      0.0,
+      -1.125
+    ],
+    "max": [
+      -85.0,
+      2.6,
+      -0.875
+    ]
+  },
+  "Door_LifePower_JambR": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -89.0,
+      0.0,
+      -1.125
+    ],
+    "max": [
+      -88.4,
+      2.6,
+      -0.875
+    ]
+  },
+  "Door_LifePower_Header": {
+    "faces": 6,
+    "materials": [
+      "BO_Door.002"
+    ],
+    "min": [
+      -89.0,
+      2.6,
+      -1.125
+    ],
+    "max": [
+      -85.0,
+      3.5,
+      -0.875
+    ]
+  },
+  "DAMAGED_BULKHEAD_NoPass": {
+    "faces": 6,
+    "materials": [
+      "BO_Blocked.002"
+    ],
+    "min": [
+      66.447,
+      0.0,
+      -29.879
+    ],
+    "max": [
+      68.44,
+      3.5,
+      -25.992
+    ]
+  },
+  "Vent_Junction_17_0_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      16.04,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      16.2,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_17_0_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      16.2,
+      3.46,
+      0.8
+    ],
+    "max": [
+      17.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_17_0_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      17.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      17.96,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_17_0_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      16.2,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      17.8,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Junction_17_0_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      16.2,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      17.8,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Junction_17_1_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.061,
+      3.46,
+      -12.981
+    ],
+    "max": [
+      11.221,
+      3.64,
+      -11.061
+    ]
+  },
+  "Vent_Junction_17_1_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.221,
+      3.46,
+      -11.221
+    ],
+    "max": [
+      12.821,
+      3.64,
+      -11.061
+    ]
+  },
+  "Vent_Junction_17_1_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      12.821,
+      3.46,
+      -12.981
+    ],
+    "max": [
+      12.981,
+      3.64,
+      -11.061
+    ]
+  },
+  "Vent_Junction_17_1_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.221,
+      3.46,
+      -12.981
+    ],
+    "max": [
+      12.821,
+      3.64,
+      -12.821
+    ]
+  },
+  "Vent_Junction_17_1_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.221,
+      3.5,
+      -12.821
+    ],
+    "max": [
+      12.821,
+      3.58,
+      -11.221
+    ]
+  },
+  "Vent_Junction_17_2_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      -17.96
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      -16.04
+    ]
+  },
+  "Vent_Junction_17_2_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -16.2
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -16.04
+    ]
+  },
+  "Vent_Junction_17_2_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      -17.96
+    ],
+    "max": [
+      0.96,
+      3.64,
+      -16.04
+    ]
+  },
+  "Vent_Junction_17_2_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -17.96
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -17.8
+    ]
+  },
+  "Vent_Junction_17_2_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      -17.8
+    ],
+    "max": [
+      0.8,
+      3.58,
+      -16.2
+    ]
+  },
+  "Vent_Junction_17_3_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.981,
+      3.46,
+      -12.981
+    ],
+    "max": [
+      -12.821,
+      3.64,
+      -11.061
+    ]
+  },
+  "Vent_Junction_17_3_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.821,
+      3.46,
+      -11.221
+    ],
+    "max": [
+      -11.221,
+      3.64,
+      -11.061
+    ]
+  },
+  "Vent_Junction_17_3_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -11.221,
+      3.46,
+      -12.981
+    ],
+    "max": [
+      -11.061,
+      3.64,
+      -11.061
+    ]
+  },
+  "Vent_Junction_17_3_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.821,
+      3.46,
+      -12.981
+    ],
+    "max": [
+      -11.221,
+      3.64,
+      -12.821
+    ]
+  },
+  "Vent_Junction_17_3_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.821,
+      3.5,
+      -12.821
+    ],
+    "max": [
+      -11.221,
+      3.58,
+      -11.221
+    ]
+  },
+  "Vent_Junction_17_4_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -17.96,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -17.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_17_4_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -17.8,
+      3.46,
+      0.8
+    ],
+    "max": [
+      -16.2,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_17_4_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -16.2,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -16.04,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_17_4_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -17.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -16.2,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Junction_17_4_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -17.8,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      -16.2,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Junction_17_5_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.981,
+      3.46,
+      11.061
+    ],
+    "max": [
+      -12.821,
+      3.64,
+      12.981
+    ]
+  },
+  "Vent_Junction_17_5_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.821,
+      3.46,
+      12.821
+    ],
+    "max": [
+      -11.221,
+      3.64,
+      12.981
+    ]
+  },
+  "Vent_Junction_17_5_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -11.221,
+      3.46,
+      11.061
+    ],
+    "max": [
+      -11.061,
+      3.64,
+      12.981
+    ]
+  },
+  "Vent_Junction_17_5_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.821,
+      3.46,
+      11.061
+    ],
+    "max": [
+      -11.221,
+      3.64,
+      11.221
+    ]
+  },
+  "Vent_Junction_17_5_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -12.821,
+      3.5,
+      11.221
+    ],
+    "max": [
+      -11.221,
+      3.58,
+      12.821
+    ]
+  },
+  "Vent_Junction_17_6_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      16.04
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      17.96
+    ]
+  },
+  "Vent_Junction_17_6_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      17.8
+    ],
+    "max": [
+      0.8,
+      3.64,
+      17.96
+    ]
+  },
+  "Vent_Junction_17_6_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      16.04
+    ],
+    "max": [
+      0.96,
+      3.64,
+      17.96
+    ]
+  },
+  "Vent_Junction_17_6_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      16.04
+    ],
+    "max": [
+      0.8,
+      3.64,
+      16.2
+    ]
+  },
+  "Vent_Junction_17_6_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      16.2
+    ],
+    "max": [
+      0.8,
+      3.58,
+      17.8
+    ]
+  },
+  "Vent_Junction_17_7_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.061,
+      3.46,
+      11.061
+    ],
+    "max": [
+      11.221,
+      3.64,
+      12.981
+    ]
+  },
+  "Vent_Junction_17_7_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.221,
+      3.46,
+      12.821
+    ],
+    "max": [
+      12.821,
+      3.64,
+      12.981
+    ]
+  },
+  "Vent_Junction_17_7_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      12.821,
+      3.46,
+      11.061
+    ],
+    "max": [
+      12.981,
+      3.64,
+      12.981
+    ]
+  },
+  "Vent_Junction_17_7_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.221,
+      3.46,
+      11.061
+    ],
+    "max": [
+      12.821,
+      3.64,
+      11.221
+    ]
+  },
+  "Vent_Junction_17_7_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      11.221,
+      3.5,
+      11.221
+    ],
+    "max": [
+      12.821,
+      3.58,
+      12.821
+    ]
+  },
+  "Vent_Junction_41_0_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      40.04,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      40.2,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_41_0_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      40.2,
+      3.46,
+      0.8
+    ],
+    "max": [
+      41.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_41_0_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      41.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      41.96,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_41_0_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      40.2,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      41.8,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Junction_41_0_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      40.2,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      41.8,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Junction_41_1_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.031,
+      3.46,
+      -29.951
+    ],
+    "max": [
+      28.191,
+      3.64,
+      -28.031
+    ]
+  },
+  "Vent_Junction_41_1_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.191,
+      3.46,
+      -28.191
+    ],
+    "max": [
+      29.791,
+      3.64,
+      -28.031
+    ]
+  },
+  "Vent_Junction_41_1_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      29.791,
+      3.46,
+      -29.951
+    ],
+    "max": [
+      29.951,
+      3.64,
+      -28.031
+    ]
+  },
+  "Vent_Junction_41_1_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.191,
+      3.46,
+      -29.951
+    ],
+    "max": [
+      29.791,
+      3.64,
+      -29.791
+    ]
+  },
+  "Vent_Junction_41_1_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.191,
+      3.5,
+      -29.791
+    ],
+    "max": [
+      29.791,
+      3.58,
+      -28.191
+    ]
+  },
+  "Vent_Junction_41_2_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      -41.96
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      -40.04
+    ]
+  },
+  "Vent_Junction_41_2_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -40.2
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -40.04
+    ]
+  },
+  "Vent_Junction_41_2_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      -41.96
+    ],
+    "max": [
+      0.96,
+      3.64,
+      -40.04
+    ]
+  },
+  "Vent_Junction_41_2_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -41.96
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -41.8
+    ]
+  },
+  "Vent_Junction_41_2_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      -41.8
+    ],
+    "max": [
+      0.8,
+      3.58,
+      -40.2
+    ]
+  },
+  "Vent_Junction_41_3_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.951,
+      3.46,
+      -29.951
+    ],
+    "max": [
+      -29.791,
+      3.64,
+      -28.031
+    ]
+  },
+  "Vent_Junction_41_3_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.791,
+      3.46,
+      -28.191
+    ],
+    "max": [
+      -28.191,
+      3.64,
+      -28.031
+    ]
+  },
+  "Vent_Junction_41_3_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -28.191,
+      3.46,
+      -29.951
+    ],
+    "max": [
+      -28.031,
+      3.64,
+      -28.031
+    ]
+  },
+  "Vent_Junction_41_3_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.791,
+      3.46,
+      -29.951
+    ],
+    "max": [
+      -28.191,
+      3.64,
+      -29.791
+    ]
+  },
+  "Vent_Junction_41_3_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.791,
+      3.5,
+      -29.791
+    ],
+    "max": [
+      -28.191,
+      3.58,
+      -28.191
+    ]
+  },
+  "Vent_Junction_41_4_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -41.96,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -41.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_41_4_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -41.8,
+      3.46,
+      0.8
+    ],
+    "max": [
+      -40.2,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_41_4_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -40.2,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -40.04,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_41_4_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -41.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -40.2,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Junction_41_4_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -41.8,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      -40.2,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Junction_41_5_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.951,
+      3.46,
+      28.031
+    ],
+    "max": [
+      -29.791,
+      3.64,
+      29.951
+    ]
+  },
+  "Vent_Junction_41_5_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.791,
+      3.46,
+      29.791
+    ],
+    "max": [
+      -28.191,
+      3.64,
+      29.951
+    ]
+  },
+  "Vent_Junction_41_5_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -28.191,
+      3.46,
+      28.031
+    ],
+    "max": [
+      -28.031,
+      3.64,
+      29.951
+    ]
+  },
+  "Vent_Junction_41_5_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.791,
+      3.46,
+      28.031
+    ],
+    "max": [
+      -28.191,
+      3.64,
+      28.191
+    ]
+  },
+  "Vent_Junction_41_5_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -29.791,
+      3.5,
+      28.191
+    ],
+    "max": [
+      -28.191,
+      3.58,
+      29.791
+    ]
+  },
+  "Vent_Junction_41_6_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      40.04
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      41.96
+    ]
+  },
+  "Vent_Junction_41_6_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      41.8
+    ],
+    "max": [
+      0.8,
+      3.64,
+      41.96
+    ]
+  },
+  "Vent_Junction_41_6_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      40.04
+    ],
+    "max": [
+      0.96,
+      3.64,
+      41.96
+    ]
+  },
+  "Vent_Junction_41_6_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      40.04
+    ],
+    "max": [
+      0.8,
+      3.64,
+      40.2
+    ]
+  },
+  "Vent_Junction_41_6_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      40.2
+    ],
+    "max": [
+      0.8,
+      3.58,
+      41.8
+    ]
+  },
+  "Vent_Junction_41_7_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.031,
+      3.46,
+      28.031
+    ],
+    "max": [
+      28.191,
+      3.64,
+      29.951
+    ]
+  },
+  "Vent_Junction_41_7_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.191,
+      3.46,
+      29.791
+    ],
+    "max": [
+      29.791,
+      3.64,
+      29.951
+    ]
+  },
+  "Vent_Junction_41_7_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      29.791,
+      3.46,
+      28.031
+    ],
+    "max": [
+      29.951,
+      3.64,
+      29.951
+    ]
+  },
+  "Vent_Junction_41_7_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.191,
+      3.46,
+      28.031
+    ],
+    "max": [
+      29.791,
+      3.64,
+      28.191
+    ]
+  },
+  "Vent_Junction_41_7_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      28.191,
+      3.5,
+      28.191
+    ],
+    "max": [
+      29.791,
+      3.58,
+      29.791
+    ]
+  },
+  "Vent_Junction_73_0_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.04,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      72.2,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_73_0_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.2,
+      3.46,
+      0.8
+    ],
+    "max": [
+      73.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_73_0_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      73.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      73.96,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_73_0_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.2,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      73.8,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Junction_73_0_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.2,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      73.8,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Junction_73_1_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.659,
+      3.46,
+      -52.579
+    ],
+    "max": [
+      50.819,
+      3.64,
+      -50.659
+    ]
+  },
+  "Vent_Junction_73_1_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.819,
+      3.46,
+      -50.819
+    ],
+    "max": [
+      52.419,
+      3.64,
+      -50.659
+    ]
+  },
+  "Vent_Junction_73_1_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      52.419,
+      3.46,
+      -52.579
+    ],
+    "max": [
+      52.579,
+      3.64,
+      -50.659
+    ]
+  },
+  "Vent_Junction_73_1_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.819,
+      3.46,
+      -52.579
+    ],
+    "max": [
+      52.419,
+      3.64,
+      -52.419
+    ]
+  },
+  "Vent_Junction_73_1_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.819,
+      3.5,
+      -52.419
+    ],
+    "max": [
+      52.419,
+      3.58,
+      -50.819
+    ]
+  },
+  "Vent_Junction_73_2_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      -73.96
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      -72.04
+    ]
+  },
+  "Vent_Junction_73_2_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -72.2
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -72.04
+    ]
+  },
+  "Vent_Junction_73_2_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      -73.96
+    ],
+    "max": [
+      0.96,
+      3.64,
+      -72.04
+    ]
+  },
+  "Vent_Junction_73_2_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -73.96
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -73.8
+    ]
+  },
+  "Vent_Junction_73_2_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      -73.8
+    ],
+    "max": [
+      0.8,
+      3.58,
+      -72.2
+    ]
+  },
+  "Vent_Junction_73_3_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.579,
+      3.46,
+      -52.579
+    ],
+    "max": [
+      -52.419,
+      3.64,
+      -50.659
+    ]
+  },
+  "Vent_Junction_73_3_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.419,
+      3.46,
+      -50.819
+    ],
+    "max": [
+      -50.819,
+      3.64,
+      -50.659
+    ]
+  },
+  "Vent_Junction_73_3_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -50.819,
+      3.46,
+      -52.579
+    ],
+    "max": [
+      -50.659,
+      3.64,
+      -50.659
+    ]
+  },
+  "Vent_Junction_73_3_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.419,
+      3.46,
+      -52.579
+    ],
+    "max": [
+      -50.819,
+      3.64,
+      -52.419
+    ]
+  },
+  "Vent_Junction_73_3_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.419,
+      3.5,
+      -52.419
+    ],
+    "max": [
+      -50.819,
+      3.58,
+      -50.819
+    ]
+  },
+  "Vent_Junction_73_4_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -73.96,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -73.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_73_4_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -73.8,
+      3.46,
+      0.8
+    ],
+    "max": [
+      -72.2,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_73_4_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -72.2,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -72.04,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Junction_73_4_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -73.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -72.2,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Junction_73_4_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -73.8,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      -72.2,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Junction_73_5_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.579,
+      3.46,
+      50.659
+    ],
+    "max": [
+      -52.419,
+      3.64,
+      52.579
+    ]
+  },
+  "Vent_Junction_73_5_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.419,
+      3.46,
+      52.419
+    ],
+    "max": [
+      -50.819,
+      3.64,
+      52.579
+    ]
+  },
+  "Vent_Junction_73_5_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -50.819,
+      3.46,
+      50.659
+    ],
+    "max": [
+      -50.659,
+      3.64,
+      52.579
+    ]
+  },
+  "Vent_Junction_73_5_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.419,
+      3.46,
+      50.659
+    ],
+    "max": [
+      -50.819,
+      3.64,
+      50.819
+    ]
+  },
+  "Vent_Junction_73_5_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -52.419,
+      3.5,
+      50.819
+    ],
+    "max": [
+      -50.819,
+      3.58,
+      52.419
+    ]
+  },
+  "Vent_Junction_73_6_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      72.04
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      73.96
+    ]
+  },
+  "Vent_Junction_73_6_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      73.8
+    ],
+    "max": [
+      0.8,
+      3.64,
+      73.96
+    ]
+  },
+  "Vent_Junction_73_6_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      72.04
+    ],
+    "max": [
+      0.96,
+      3.64,
+      73.96
+    ]
+  },
+  "Vent_Junction_73_6_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      72.04
+    ],
+    "max": [
+      0.8,
+      3.64,
+      72.2
+    ]
+  },
+  "Vent_Junction_73_6_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      72.2
+    ],
+    "max": [
+      0.8,
+      3.58,
+      73.8
+    ]
+  },
+  "Vent_Junction_73_7_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.659,
+      3.46,
+      50.659
+    ],
+    "max": [
+      50.819,
+      3.64,
+      52.579
+    ]
+  },
+  "Vent_Junction_73_7_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.819,
+      3.46,
+      52.419
+    ],
+    "max": [
+      52.419,
+      3.64,
+      52.579
+    ]
+  },
+  "Vent_Junction_73_7_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      52.419,
+      3.46,
+      50.659
+    ],
+    "max": [
+      52.579,
+      3.64,
+      52.579
+    ]
+  },
+  "Vent_Junction_73_7_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.819,
+      3.46,
+      50.659
+    ],
+    "max": [
+      52.419,
+      3.64,
+      50.819
+    ]
+  },
+  "Vent_Junction_73_7_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      50.819,
+      3.5,
+      50.819
+    ],
+    "max": [
+      52.419,
+      3.58,
+      52.419
+    ]
+  },
+  "Vent_Control_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.96,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      -0.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Control_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      0.8
+    ],
+    "max": [
+      0.8,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Control_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      0.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      0.96,
+      3.64,
+      0.96
+    ]
+  },
+  "Vent_Control_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.46,
+      -0.96
+    ],
+    "max": [
+      0.8,
+      3.64,
+      -0.8
+    ]
+  },
+  "Vent_Control_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -0.8,
+      3.5,
+      -0.8
+    ],
+    "max": [
+      0.8,
+      3.58,
+      0.8
+    ]
+  },
+  "Vent_Research_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      2.04,
+      3.46,
+      -67.96
+    ],
+    "max": [
+      2.2,
+      3.64,
+      -66.04
+    ]
+  },
+  "Vent_Research_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      2.2,
+      3.46,
+      -66.2
+    ],
+    "max": [
+      3.8,
+      3.64,
+      -66.04
+    ]
+  },
+  "Vent_Research_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      3.8,
+      3.46,
+      -67.96
+    ],
+    "max": [
+      3.96,
+      3.64,
+      -66.04
+    ]
+  },
+  "Vent_Research_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      2.2,
+      3.46,
+      -67.96
+    ],
+    "max": [
+      3.8,
+      3.64,
+      -67.8
+    ]
+  },
+  "Vent_Research_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      2.2,
+      3.5,
+      -67.8
+    ],
+    "max": [
+      3.8,
+      3.58,
+      -66.2
+    ]
+  },
+  "Vent_LifeSupport_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.96,
+      3.46,
+      -24.96
+    ],
+    "max": [
+      -86.8,
+      3.64,
+      -23.04
+    ]
+  },
+  "Vent_LifeSupport_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.8,
+      3.46,
+      -23.2
+    ],
+    "max": [
+      -85.2,
+      3.64,
+      -23.04
+    ]
+  },
+  "Vent_LifeSupport_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -85.2,
+      3.46,
+      -24.96
+    ],
+    "max": [
+      -85.04,
+      3.64,
+      -23.04
+    ]
+  },
+  "Vent_LifeSupport_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.8,
+      3.46,
+      -24.96
+    ],
+    "max": [
+      -85.2,
+      3.64,
+      -24.8
+    ]
+  },
+  "Vent_LifeSupport_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.8,
+      3.5,
+      -24.8
+    ],
+    "max": [
+      -85.2,
+      3.58,
+      -23.2
+    ]
+  },
+  "Vent_Power_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.96,
+      3.46,
+      19.04
+    ],
+    "max": [
+      -86.8,
+      3.64,
+      20.96
+    ]
+  },
+  "Vent_Power_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.8,
+      3.46,
+      20.8
+    ],
+    "max": [
+      -85.2,
+      3.64,
+      20.96
+    ]
+  },
+  "Vent_Power_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -85.2,
+      3.46,
+      19.04
+    ],
+    "max": [
+      -85.04,
+      3.64,
+      20.96
+    ]
+  },
+  "Vent_Power_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.8,
+      3.46,
+      19.04
+    ],
+    "max": [
+      -85.2,
+      3.64,
+      19.2
+    ]
+  },
+  "Vent_Power_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -86.8,
+      3.5,
+      19.2
+    ],
+    "max": [
+      -85.2,
+      3.58,
+      20.8
+    ]
+  },
+  "Vent_Medical_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      55.04,
+      3.46,
+      -23.96
+    ],
+    "max": [
+      55.2,
+      3.64,
+      -22.04
+    ]
+  },
+  "Vent_Medical_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      55.2,
+      3.46,
+      -22.2
+    ],
+    "max": [
+      56.8,
+      3.64,
+      -22.04
+    ]
+  },
+  "Vent_Medical_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      56.8,
+      3.46,
+      -23.96
+    ],
+    "max": [
+      56.96,
+      3.64,
+      -22.04
+    ]
+  },
+  "Vent_Medical_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      55.2,
+      3.46,
+      -23.96
+    ],
+    "max": [
+      56.8,
+      3.64,
+      -23.8
+    ]
+  },
+  "Vent_Medical_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      55.2,
+      3.5,
+      -23.8
+    ],
+    "max": [
+      56.8,
+      3.58,
+      -22.2
+    ]
+  },
+  "Vent_Habitation_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      57.04,
+      3.46,
+      23.04
+    ],
+    "max": [
+      57.2,
+      3.64,
+      24.96
+    ]
+  },
+  "Vent_Habitation_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      57.2,
+      3.46,
+      24.8
+    ],
+    "max": [
+      58.8,
+      3.64,
+      24.96
+    ]
+  },
+  "Vent_Habitation_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      58.8,
+      3.46,
+      23.04
+    ],
+    "max": [
+      58.96,
+      3.64,
+      24.96
+    ]
+  },
+  "Vent_Habitation_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      57.2,
+      3.46,
+      23.04
+    ],
+    "max": [
+      58.8,
+      3.64,
+      23.2
+    ]
+  },
+  "Vent_Habitation_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      57.2,
+      3.5,
+      23.2
+    ],
+    "max": [
+      58.8,
+      3.58,
+      24.8
+    ]
+  },
+  "Vent_Warehouse_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -28.96,
+      3.46,
+      66.04
+    ],
+    "max": [
+      -28.8,
+      3.64,
+      67.96
+    ]
+  },
+  "Vent_Warehouse_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -28.8,
+      3.46,
+      67.8
+    ],
+    "max": [
+      -27.2,
+      3.64,
+      67.96
+    ]
+  },
+  "Vent_Warehouse_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -27.2,
+      3.46,
+      66.04
+    ],
+    "max": [
+      -27.04,
+      3.64,
+      67.96
+    ]
+  },
+  "Vent_Warehouse_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -28.8,
+      3.46,
+      66.04
+    ],
+    "max": [
+      -27.2,
+      3.64,
+      66.2
+    ]
+  },
+  "Vent_Warehouse_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      -28.8,
+      3.5,
+      66.2
+    ],
+    "max": [
+      -27.2,
+      3.58,
+      67.8
+    ]
+  },
+  "Vent_Docking_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      4.04,
+      3.46,
+      66.04
+    ],
+    "max": [
+      4.2,
+      3.64,
+      67.96
+    ]
+  },
+  "Vent_Docking_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      4.2,
+      3.46,
+      67.8
+    ],
+    "max": [
+      5.8,
+      3.64,
+      67.96
+    ]
+  },
+  "Vent_Docking_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      5.8,
+      3.46,
+      66.04
+    ],
+    "max": [
+      5.96,
+      3.64,
+      67.96
+    ]
+  },
+  "Vent_Docking_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      4.2,
+      3.46,
+      66.04
+    ],
+    "max": [
+      5.8,
+      3.64,
+      66.2
+    ]
+  },
+  "Vent_Docking_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      4.2,
+      3.5,
+      66.2
+    ],
+    "max": [
+      5.8,
+      3.58,
+      67.8
+    ]
+  },
+  "Vent_Escape_RimX-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.04,
+      3.46,
+      -73.96
+    ],
+    "max": [
+      72.2,
+      3.64,
+      -72.04
+    ]
+  },
+  "Vent_Escape_RimY-1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.2,
+      3.46,
+      -72.2
+    ],
+    "max": [
+      73.8,
+      3.64,
+      -72.04
+    ]
+  },
+  "Vent_Escape_RimX1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      73.8,
+      3.46,
+      -73.96
+    ],
+    "max": [
+      73.96,
+      3.64,
+      -72.04
+    ]
+  },
+  "Vent_Escape_RimY1": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.2,
+      3.46,
+      -73.96
+    ],
+    "max": [
+      73.8,
+      3.64,
+      -73.8
+    ]
+  },
+  "Vent_Escape_GrilleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Vent.002"
+    ],
+    "min": [
+      72.2,
+      3.5,
+      -73.8
+    ],
+    "max": [
+      73.8,
+      3.58,
+      -72.2
+    ]
+  },
+  "Control_Console": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -5.0,
+      0.0,
+      -3.0
+    ],
+    "max": [
+      -1.0,
+      1.3,
+      -1.0
+    ]
+  },
+  "LifeSupport_Tanks": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -93.0,
+      0.0,
+      -30.5
+    ],
+    "max": [
+      -91.0,
+      2.4,
+      -17.5
+    ]
+  },
+  "Power_Generator": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -91.5,
+      0.0,
+      17.0
+    ],
+    "max": [
+      -86.5,
+      2.3,
+      25.0
+    ]
+  },
+  "Medical_Beds": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      55.0,
+      0.0,
+      -11.0
+    ],
+    "max": [
+      61.0,
+      0.9,
+      -9.0
+    ]
+  },
+  "Research_BenchWest": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -16.0,
+      0.0,
+      -65.5
+    ],
+    "max": [
+      -8.0,
+      1.2,
+      -62.5
+    ]
+  },
+  "Research_BenchEast": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      8.0,
+      0.0,
+      -65.5
+    ],
+    "max": [
+      16.0,
+      1.2,
+      -62.5
+    ]
+  },
+  "Warehouse_CratesWest": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -37.5,
+      0.0,
+      58.0
+    ],
+    "max": [
+      -34.5,
+      2.0,
+      70.0
+    ]
+  },
+  "Warehouse_CratesEast": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -22.5,
+      0.0,
+      59.0
+    ],
+    "max": [
+      -19.5,
+      2.0,
+      71.0
+    ]
+  },
+  "Docking_ShuttleProxy": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      -1.0,
+      0.0,
+      77.0
+    ],
+    "max": [
+      7.0,
+      2.3,
+      91.0
+    ]
+  },
+  "Hab_Bed(50,_-10)": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      49.0,
+      0.0,
+      8.5
+    ],
+    "max": [
+      51.0,
+      0.7,
+      11.5
+    ]
+  },
+  "Hab_Bed(50,_-27)": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      49.0,
+      0.0,
+      25.5
+    ],
+    "max": [
+      51.0,
+      0.7,
+      28.5
+    ]
+  },
+  "Hab_Bed(60,_-10)": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      59.0,
+      0.0,
+      8.5
+    ],
+    "max": [
+      61.0,
+      0.7,
+      11.5
+    ]
+  },
+  "Hab_Bed(60,_-27)": {
+    "faces": 6,
+    "materials": [
+      "BO_Equipment.002"
+    ],
+    "min": [
+      59.0,
+      0.0,
+      25.5
+    ],
+    "max": [
+      61.0,
+      0.7,
+      28.5
+    ]
+  },
+  "Label_Control": {
+    "faces": 400,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      -4.026,
+      3.82,
+      -1.175
+    ],
+    "max": [
+      4.091,
+      3.82,
+      0.015
+    ]
+  },
+  "Label_Research": {
+    "faces": 445,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      -3.924,
+      3.82,
+      -76.175
+    ],
+    "max": [
+      3.925,
+      3.82,
+      -74.985
+    ]
+  },
+  "Label_LifeSupport": {
+    "faces": 528,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      -91.911,
+      3.82,
+      -33.175
+    ],
+    "max": [
+      -81.992,
+      3.82,
+      -31.985
+    ]
+  },
+  "Label_Power": {
+    "faces": 267,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      -89.838,
+      3.82,
+      31.825
+    ],
+    "max": [
+      -84.043,
+      3.82,
+      33.015
+    ]
+  },
+  "Label_Medical": {
+    "faces": 190,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      50.6,
+      3.82,
+      -26.175
+    ],
+    "max": [
+      57.507,
+      3.82,
+      -24.985
+    ]
+  },
+  "Label_Habitation": {
+    "faces": 260,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      50.08,
+      3.82,
+      27.825
+    ],
+    "max": [
+      59.92,
+      3.82,
+      29.015
+    ]
+  },
+  "Label_Warehouse": {
+    "faces": 438,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      -34.126,
+      3.82,
+      71.825
+    ],
+    "max": [
+      -23.923,
+      3.82,
+      73.015
+    ]
+  },
+  "Label_Docking": {
+    "faces": 365,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      -3.873,
+      3.82,
+      73.825
+    ],
+    "max": [
+      3.888,
+      3.82,
+      75.015
+    ]
+  },
+  "Label_Escape": {
+    "faces": 303,
+    "materials": [
+      "BO_Label.002"
+    ],
+    "min": [
+      70.786,
+      3.82,
+      -74.675
+    ],
+    "max": [
+      76.292,
+      3.82,
+      -73.485
+    ]
+  },
+  "Player175cm_Body": {
+    "faces": 6,
+    "materials": [
+      "BO_Player.002"
+    ],
+    "min": [
+      -84.23,
+      0.28,
+      -13.15
+    ],
+    "max": [
+      -83.77,
+      1.4,
+      -12.85
+    ]
+  },
+  "Player175cm_Head": {
+    "faces": 6,
+    "materials": [
+      "BO_Player.002"
+    ],
+    "min": [
+      -84.12,
+      1.5,
+      -13.12
+    ],
+    "max": [
+      -83.88,
+      1.75,
+      -12.88
+    ]
+  },
+  "Player175cm_Leg-0.13": {
+    "faces": 6,
+    "materials": [
+      "BO_Player.002"
+    ],
+    "min": [
+      -84.21,
+      0.0,
+      -13.1
+    ],
+    "max": [
+      -84.05,
+      0.42,
+      -12.9
+    ]
+  },
+  "Player175cm_Leg0.13": {
+    "faces": 6,
+    "materials": [
+      "BO_Player.002"
+    ],
+    "min": [
+      -83.95,
+      0.0,
+      -13.1
+    ],
+    "max": [
+      -83.79,
+      0.42,
+      -12.9
+    ]
+  }
+}

@@ -16,3 +16,11 @@ Release/
 
 # OBJ meshes in Res are source assets, not compiler output.
 !SimpleGame/Res/*.obj
+
+# Local migration backup and generated build outputs.
+/.git-migration-backup/
+/x64/
+/SimpleGame/x64/
+*.lastbuildstate
+*.VC.db
+*.VC.VC.opendb
