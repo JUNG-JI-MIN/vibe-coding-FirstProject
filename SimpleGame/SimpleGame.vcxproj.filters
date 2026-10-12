@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <ItemGroup>
     <Filter Include="소스 파일">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
@@ -63,13 +63,181 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ShaderProgram.h"><Filter>헤더 파일</Filter></ClInclude>
-    <None Include="Shaders\MetalMaterial.vs"><Filter>소스 파일\Shaders</Filter></None>
-    <None Include="Shaders\MetalMaterial.fs"><Filter>소스 파일\Shaders</Filter></None>
-    <None Include="Shaders\PostProcessing.vs"><Filter>소스 파일\Shaders</Filter></None>
-    <None Include="Shaders\PostProcessing.fs"><Filter>소스 파일\Shaders</Filter></None>
+    <ClInclude Include="ShaderProgram.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <None Include="Shaders\MetalMaterial.vs">
+      <Filter>소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\MetalMaterial.fs">
+      <Filter>소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\PostProcessing.vs">
+      <Filter>소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\PostProcessing.fs">
+      <Filter>소스 파일\Shaders</Filter>
+    </None>
   </ItemGroup>
-  <ItemGroup><ClInclude Include="KoreanText.h"><Filter>헤더 파일</Filter></ClInclude></ItemGroup>
-  <ItemGroup><ClInclude Include="StationCabinet.h"><Filter>Station</Filter></ClInclude></ItemGroup>
-  <ItemGroup><ClInclude Include="StationEquipment.h"><Filter>Station</Filter></ClInclude></ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KoreanText.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StationCabinet.h">
+      <Filter>Station</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StationEquipment.h">
+      <Filter>Station</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{d39d5eed-48f4-4b46-b753-7d007e51ea88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{70e41eb6-1fb2-4f7f-ac94-e0ced47f3709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{d79c796e-638a-47ac-80bd-433af0eaac2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{a86adcc6-0f1b-4750-a6e4-65676073cf33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Framework.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Mesh.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Object.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ResourceManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\BehaviorTree.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\StationAgents.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObjects.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameState.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameUI.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\MenuScenes.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\PlayScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\SceneFactories.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Simulation.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\StationWorld.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <None Include="Res\Station_Early_Model.obj">
+      <Filter>Res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AI\Blackboard.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameSession.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClCompile Include="Engine\Framework.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Mesh.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Object.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ResourceManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\BehaviorTree.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\StationAgents.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameObjects.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameSession.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameState.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameUI.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\MenuScenes.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\PlayScene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\SceneFactories.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Simulation.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\StationWorld.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KoreanText.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MetalMaterial.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcessing.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MetalMaterial.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcessing.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

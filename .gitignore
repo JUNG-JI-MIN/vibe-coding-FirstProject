@@ -13,3 +13,6 @@ Release/
 *.exe
 *.ipdb
 *.iobj
+
+# OBJ meshes in Res are source assets, not compiler output.
+!SimpleGame/Res/*.obj
