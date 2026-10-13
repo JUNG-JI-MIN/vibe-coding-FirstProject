@@ -2,6 +2,9 @@
 
 OpenGL 기반 우주정거장 생존 공포 게임의 졸업작품 프로토타입.
 
+두 PC에서 Codex 작업을 이어받을 때는 `tools/read-context.ps1`로 현재 기준과 마지막 확인 이후의 변경을 읽는다.
+공통 작업 규칙은 [AGENTS.md](AGENTS.md), 전달·확인 절차는 [동기화 안내](docs/context/sync-guide.md)를 따른다.
+
 ## 현재 구현
 
 - 준최종 기획서와 `Station_Early_Model.obj`를 기준으로 한 이중 고리형 정거장

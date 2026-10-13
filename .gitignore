@@ -24,3 +24,6 @@ Release/
 *.lastbuildstate
 *.VC.db
 *.VC.VC.opendb
+
+# Per-computer Codex review cursor and local scratch files.
+/.local/

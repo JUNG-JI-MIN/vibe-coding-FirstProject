@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "modules": [
+    {
+      "id": "framework",
+      "description": "실행 진입점, 씬 전환, 오브젝트와 공유 리소스",
+      "paths": ["SimpleGame/SimpleGame.cpp", "SimpleGame/Engine/*", "SimpleGame/Game/SceneFactories.*"],
+      "docs": ["재구성_구현안내.md", "CODE_STYLE.md"]
+    },
+    {
+      "id": "ai",
+      "description": "행동 트리, 감각, 에일리언과 동료/연구원 행동",
+      "paths": ["SimpleGame/AI/*"],
+      "docs": ["AI_행동트리_설계.md"]
+    },
+    {
+      "id": "simulation",
+      "description": "게임 상태, 로컬 입력, 시나리오와 작업 판정",
+      "paths": ["SimpleGame/Game/GameState.*", "SimpleGame/Game/GameSession.*", "SimpleGame/Game/Simulation.*"],
+      "docs": ["재구성_구현안내.md", "우주정거장_맵기획서_준최종.txt"]
+    },
+    {
+      "id": "world",
+      "description": "OBJ 보행, 차폐, A*와 문 상태",
+      "paths": ["SimpleGame/Game/StationWorld.*", "SimpleGame/Res/*", "verify_map.py", "asset_manifest.json"],
+      "docs": ["재구성_구현안내.md", "AI_행동트리_설계.md"]
+    },
+    {
+      "id": "presentation",
+      "description": "플레이/메뉴 씬, UI, 표현 오브젝트와 그래픽",
+      "paths": ["SimpleGame/Game/PlayScene.*", "SimpleGame/Game/MenuScenes.*", "SimpleGame/Game/GameUI.*", "SimpleGame/Game/GameObjects.*", "SimpleGame/Shaders/*", "SimpleGame/Renderer.*", "SimpleGame/MetalMaterial.*", "SimpleGame/PostProcessing.*", "SimpleGame/ShaderProgram.*", "SimpleGame/KoreanText.*"],
+      "docs": ["CODE_STYLE.md", "UI 기획안.xlsx", "재구성_구현안내.md"]
+    },
+    {
+      "id": "build",
+      "description": "Visual Studio 구성, DLL/셰이더/모델 배치",
+      "paths": ["SimpleGame.sln", "SimpleGame/SimpleGame.vcxproj*", "SimpleGame/stdafx.*", "SimpleGame/targetver.h", "Runtime/*", "SimpleGame/Dependencies/*"],
+      "docs": ["README.md", "CODE_STYLE.md"]
+    },
+    {
+      "id": "context",
+      "description": "두 PC 공통 기준과 변경분 인계",
+      "paths": ["AGENTS.md", "docs/*", "tools/read-context.ps1", ".gitignore"],
+      "docs": ["docs/context/sync-guide.md", "docs/decisions/001-shared-context.md"]
+    }
+  ]
+}
